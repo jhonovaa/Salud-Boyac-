@@ -1,0 +1,26 @@
+package co.sena.adso.dto;
+
+import java.sql.Time;
+
+public class Horario {
+    private int id;
+    private int idMedico;
+    private int diaSemana;
+    private Time horaInicio;
+    private Time horaFin;
+    private int maxCitas;
+
+    // Getters y Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public int getIdMedico() { return idMedico; }
+    public void setIdMedico(int idMedico) { this.idMedico = idMedico; }
+    public int getDiaSemana() { return diaSemana; }
+    public void setDiaSemana(int diaSemana) { this.diaSemana = diaSemana; }
+    public Time getHoraInicio() { return horaInicio; }
+    public void setHoraInicio(Time horaInicio) { this.horaInicio = horaInicio; }
+    public Time getHoraFin() { return horaFin; }
+    public void setHoraFin(Time horaFin) { this.horaFin = horaFin; }
+    public int getMaxCitas() { return maxCitas; }
+    public void setMaxCitas(int maxCitas) { this.maxCitas = maxCitas; }
+}
