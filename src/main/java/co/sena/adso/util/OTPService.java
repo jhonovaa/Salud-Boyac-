@@ -15,8 +15,9 @@ import jakarta.mail.internet.MimeMessage;
 public class OTPService {
     private static final String SMTP_HOST = "smtp.gmail.com";
     private static final int SMTP_PORT = 587;
-    private static final String EMAIL_REMIT = "tu_correo@gmail.com";
-    private static final String EMAIL_PASS = System.getenv("EMAIL_PASS");
+    private static final String EMAIL_REMIT = "angeldanicp@gmail.com";
+    private static final String EMAIL_PASS = "mavz gvqr zaqh ipmo";
+                
 
     public static String generarOTP() {
         SecureRandom rnd = new SecureRandom();
