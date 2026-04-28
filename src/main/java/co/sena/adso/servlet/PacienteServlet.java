@@ -2,6 +2,7 @@ package co.sena.adso.servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 import co.sena.adso.dao.PacienteDAO;
 import co.sena.adso.dto.Paciente;
@@ -23,9 +24,9 @@ public class PacienteServlet extends HttpServlet {
 
         switch (accion) {
             case "listar":
-                // Asumiendo que creaste un método listarTodos() en PacienteDAO
-                // List<Paciente> lista = dao.listarTodos();
-                // request.setAttribute("pacientes", lista);
+                // CORRECCIÓN: Descomentado para que envíe los datos a la tabla
+                List<Paciente> lista = dao.listarTodos();
+                request.setAttribute("pacientes", lista);
                 request.getRequestDispatcher("/views/pacientes/lista.jsp").forward(request, response);
                 break;
             case "nuevo":
@@ -48,12 +49,20 @@ public class PacienteServlet extends HttpServlet {
             p.setDocumento(request.getParameter("documento"));
             p.setFechaNacimiento(Date.valueOf(request.getParameter("fechaNacimiento")));
             p.setTelefono(request.getParameter("telefono"));
-            p.setEmail(request.getParameter("email"));
             p.setEps(request.getParameter("eps"));
             
-            // Asumiendo método insertar en PacienteDAO
-            // dao.insertar(p); 
-            response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=creado");
+            // Validamos campos que tu formulario no tiene obligatorios para evitar valores "null" en la DB
+            String email = request.getParameter("email");
+            p.setEmail(email != null ? email : "");
+            
+            String veredaBarrio = request.getParameter("veredaBarrio");
+            p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
+            
+            // CORRECCIÓN: Descomentado para guardar realmente en la base de datos
+            dao.insertar(p); 
+            
+            // Enviamos mensaje=ok para que dispare la alerta de éxito en la lista
+            response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
         }
     }
 }

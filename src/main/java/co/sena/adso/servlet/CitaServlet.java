@@ -30,8 +30,44 @@ public class CitaServlet extends HttpServlet {
                 request.getRequestDispatcher("/views/citas/lista.jsp").forward(request, response);
                 break;
             case "nuevo":
-                // Aquí deberías cargar las listas de pacientes, médicos y especialidades para el select
+                // Cargamos las listas base para el formulario
+                co.sena.adso.dao.PacienteDAO pacDao = new co.sena.adso.dao.PacienteDAO();
+                co.sena.adso.dao.EspecialidadDAO espDao = new co.sena.adso.dao.EspecialidadDAO();
+                request.setAttribute("pacientes", pacDao.listarTodos());
+                request.setAttribute("especialidades", espDao.listarTodas());
                 request.getRequestDispatcher("/views/citas/formulario.jsp").forward(request, response);
+                break;
+            case "cargarMedicos":
+                // CORRECCIÓN: Capturamos la especialidad y usamos el método filtrado
+                int idEsp = 0;
+                try {
+                    idEsp = Integer.parseInt(request.getParameter("idEspecialidad"));
+                } catch (NumberFormatException e) {
+                    System.err.println("Error parseando idEspecialidad: " + e.getMessage());
+                }
+
+                co.sena.adso.dao.UsuarioDAO usuDao = new co.sena.adso.dao.UsuarioDAO();
+                // Ahora sí usamos el método correcto que creamos en el DAO
+                List<co.sena.adso.dto.Usuario> medicos = usuDao.listarMedicosPorEspecialidad(idEsp);
+                
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                StringBuilder jsonMed = new StringBuilder("[");
+                for (int i = 0; i < medicos.size(); i++) {
+                    co.sena.adso.dto.Usuario m = medicos.get(i);
+                    jsonMed.append("{\"id\":").append(m.getId())
+                           .append(", \"nombre\":\"").append(m.getNombres()).append(" ").append(m.getApellidos()).append("\"}");
+                    if (i < medicos.size() - 1) jsonMed.append(",");
+                }
+                jsonMed.append("]");
+                response.getWriter().write(jsonMed.toString());
+                break;
+            case "cargarHorarios":
+                // Respuesta AJAX con horas disponibles
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                String jsonHoras = "[\"08:00\", \"09:00\", \"10:00\", \"11:00\", \"14:00\", \"15:00\", \"16:00\"]";
+                response.getWriter().write(jsonHoras);
                 break;
             default:
                 response.sendRedirect(request.getContextPath() + "/citas");
@@ -49,7 +85,6 @@ public class CitaServlet extends HttpServlet {
             cita.setIdMedico(Integer.parseInt(request.getParameter("idMedico")));
             cita.setIdEspecialidad(Integer.parseInt(request.getParameter("idEspecialidad")));
             cita.setFechaCita(Date.valueOf(request.getParameter("fechaCita")));
-            // Se asume formato HH:mm del formulario web, agregamos los segundos para SQL Time
             cita.setHoraCita(Time.valueOf(request.getParameter("horaCita") + ":00"));
             cita.setMotivo(request.getParameter("motivo"));
 

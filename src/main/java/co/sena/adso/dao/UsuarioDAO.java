@@ -63,4 +63,50 @@ public class UsuarioDAO {
         }
         return lista;
     }
+
+    public List<Usuario> listarMedicos() {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT id, nombres, apellidos FROM usuarios WHERE rol = 'MEDICO' AND activo = true";
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id"));
+                u.setNombres(rs.getString("nombres"));
+                u.setApellidos(rs.getString("apellidos"));
+                lista.add(u);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error listando médicos: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    // ==============================================================================
+    // MÉTODO AGREGADO: Necesario para que el desplegable cargue los médicos
+    // ==============================================================================
+    public List<Usuario> listarMedicosPorEspecialidad(int idEspecialidad) {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT id, nombres, apellidos FROM usuarios WHERE rol = 'MEDICO' AND especialidad = ? AND activo = true";
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            // Pasamos la especialidad como String porque en tu BD es varchar
+            ps.setString(1, String.valueOf(idEspecialidad));
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNombres(rs.getString("nombres"));
+                    u.setApellidos(rs.getString("apellidos"));
+                    lista.add(u);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error listando médicos por especialidad: " + e.getMessage());
+        }
+        return lista;
+    }
 }
