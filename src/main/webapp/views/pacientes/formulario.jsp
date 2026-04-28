@@ -61,7 +61,7 @@
                 <i class="fa-solid fa-user-plus me-2"></i><fmt:message key='paciente.nuevo'/>
             </h4>
             <a href="${pageContext.request.contextPath}/pacientes" class="btn btn-outline-secondary fw-bold rounded-pill px-4">
-                <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                <i class="fa-solid fa-arrow-left me-1"></i> <fmt:message key='paciente.volver'/>
             </a>
         </header>
 

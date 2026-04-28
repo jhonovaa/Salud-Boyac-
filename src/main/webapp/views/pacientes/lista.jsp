@@ -20,7 +20,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/saludboyaca.css" rel="stylesheet">
 
     <style>
-        /* Ajuste Dinámico para la Sidebar */
+        /* Ajuste Dinamico para la Sidebar */
         .main-wrapper {
             margin-left: 295px;
             padding: 2rem;
@@ -126,12 +126,26 @@
     <script>
         $(document).ready(function() {
             $('#tablaPacientes').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-                },
                 "pageLength": 10,
                 "ordering": true,
-                "responsive": true
+                "responsive": true,
+                "language": {
+                    "sEmptyTable":     "<fmt:message key='dt.vacio'/>",
+                    "sInfo":           "<fmt:message key='dt.info'/>",
+                    "sInfoEmpty":      "<fmt:message key='dt.info.vacio'/>",
+                    "sInfoFiltered":   "<fmt:message key='dt.info.filtro'/>",
+                    "sLengthMenu":     "<fmt:message key='dt.menu'/>",
+                    "sLoadingRecords": "<fmt:message key='dt.cargando'/>",
+                    "sProcessing":     "<fmt:message key='dt.procesando'/>",
+                    "sSearch":         "<fmt:message key='dt.buscar'/>",
+                    "sZeroRecords":    "<fmt:message key='dt.cero'/>",
+                    "oPaginate": {
+                        "sFirst":    "<fmt:message key='dt.pag.primero'/>",
+                        "sLast":     "<fmt:message key='dt.pag.ultimo'/>",
+                        "sNext":     "<fmt:message key='dt.pag.siguiente'/>",
+                        "sPrevious": "<fmt:message key='dt.pag.anterior'/>"
+                    }
+                }
             });
         });
     </script>

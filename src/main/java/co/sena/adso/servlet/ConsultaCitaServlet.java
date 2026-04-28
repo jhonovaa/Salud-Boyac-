@@ -1,7 +1,8 @@
 package co.sena.adso.servlet;
 
 import java.io.IOException;
-
+import co.sena.adso.dao.PacienteDAO;
+import co.sena.adso.dto.Paciente;
 import co.sena.adso.util.CaptchaGenerator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ public class ConsultaCitaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         
-        // Generar CAPTCHA nuevo
+        // Generar CAPTCHA nuevo para la vista publica [cite: 503, 735]
         String textoCaptcha = CaptchaGenerator.generarTextoCaptcha();
         session.setAttribute("captchaText", textoCaptcha);
         
@@ -32,24 +33,34 @@ public class ConsultaCitaServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String captchaIngresado = request.getParameter("captcha");
         String captchaGuardado = (String) session.getAttribute("captchaText");
+        String documento = request.getParameter("documento");
 
+        // 1. Validar CAPTCHA [cite: 853, 940]
         if (captchaGuardado != null && captchaGuardado.equalsIgnoreCase(captchaIngresado)) {
-            // CAPTCHA Válido: Proceder a buscar por documento
-            String documento = request.getParameter("documento");
             
-            // Aquí llamarías al CitaDAO para buscar las citas de este documento
-            // request.setAttribute("citasEncontradas", dao.buscarPorDocumento(documento));
+            // 2. Buscar al paciente usando tu DAO [cite: 703, 704]
+            PacienteDAO dao = new PacienteDAO();
+            Paciente paciente = dao.buscarPorDocumento(documento);
             
-            request.setAttribute("mensajeExito", "Búsqueda realizada para: " + documento);
+            if (paciente != null) {
+                // EXITO: Enviar al perfil con los datos del objeto [cite: 674]
+                request.setAttribute("paciente", paciente);
+                request.getRequestDispatcher("/views/perfil_paciente.jsp").forward(request, response);
+                return; // Finaliza para evitar regenerar captcha y volver a la consulta
+            } else {
+                // ERROR: Paciente no encontrado [cite: 856]
+                request.setAttribute("error", "consulta.no.encontrado");
+            }
         } else {
-            // CAPTCHA Inválido
-            request.setAttribute("error", "El código CAPTCHA ingresado es incorrecto.");
+            // ERROR: CAPTCHA Incorrecto [cite: 853]
+            request.setAttribute("error", "consulta.captcha.error");
         }
         
-        // Regenerar CAPTCHA tras un intento (exitoso o fallido)
+        // 3. Si hubo error, regenerar CAPTCHA y volver a la consulta [cite: 754]
         String textoCaptcha = CaptchaGenerator.generarTextoCaptcha();
         session.setAttribute("captchaText", textoCaptcha);
         request.setAttribute("captchaImage", CaptchaGenerator.generarImagenBase64(textoCaptcha));
+        request.setAttribute("documentoDigitado", documento);
         
         request.getRequestDispatcher("/views/consulta_cita.jsp").forward(request, response);
     }
