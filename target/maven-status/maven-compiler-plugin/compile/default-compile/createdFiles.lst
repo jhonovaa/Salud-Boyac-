@@ -24,6 +24,7 @@ co\sena\adso\model\Conexion.class
 co\sena\adso\dao\CitaDAO.class
 co\sena\adso\servlet\UsuarioServlet.class
 co\sena\adso\servlet\HorarioServlet.class
+co\sena\adso\servlet\PdfServlet.class
 co\sena\adso\util\OTPService$1.class
 co\sena\adso\servlet\LoginServlet.class
 co\sena\adso\config\ConexionDB.class
