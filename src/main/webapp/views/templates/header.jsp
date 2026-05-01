@@ -17,9 +17,9 @@
                 <fmt:message key='app.lang.seleccionar'/>:
             </span>
             <div class="d-flex gap-2">
-                <a href="?lang=es" class="btn-lang ${sessionScope.lang == 'es' || sessionScope.lang == null ? 'active' : ''}" title="Espanol">ES</a>
-                <a href="?lang=en" class="btn-lang ${sessionScope.lang == 'en' ? 'active' : ''}" title="English">EN</a>
-                <a href="?lang=it" class="btn-lang ${sessionScope.lang == 'it' ? 'active' : ''}" title="Italiano">IT</a>
+                <a href="?lang=es" class="btn-lang ${sessionScope.lang == 'es' || sessionScope.lang == null ? 'active' : ''}" title="<fmt:message key='app.lang.es'/>">ES</a>
+                <a href="?lang=en" class="btn-lang ${sessionScope.lang == 'en' ? 'active' : ''}" title="<fmt:message key='app.lang.en'/>">EN</a>
+                <a href="?lang=it" class="btn-lang ${sessionScope.lang == 'it' ? 'active' : ''}" title="<fmt:message key='app.lang.it'/>">IT</a>
             </div>
         </div>
 

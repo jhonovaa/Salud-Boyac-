@@ -18,7 +18,7 @@
 
         <style>
             :root {
-                /* Colores Institucionales SaludBoyacá */
+                /* Colores Institucionales SaludBoyaca */
                 --color-primario: #1A5276;
                 --color-sena: #39A900;
                 --acento-celeste: #2E86C1;
@@ -70,7 +70,7 @@
             .left-panel {
                 flex: 1.3;
                 position: relative;
-                /* Imagen de fondo médica */
+                /* Imagen de fondo medica */
                 background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
                 display: flex;
                 align-items: center;
@@ -266,7 +266,7 @@
                 
                 <div class="top-actions">
                     <div class="lang-flags">
-                        <a href="?lang=es" title="Español">🇨🇴</a>
+                        <a href="?lang=es" title="Espanol">🇨🇴</a>
                         <a href="?lang=en" title="English">🇺🇸</a>
                         <a href="?lang=it" title="Italiano">🇮🇹</a>
                     </div>
@@ -274,7 +274,7 @@
 
                 <div class="login-box">
                     <h3 class="animate-item"><fmt:message key='login.titulo'/></h3>
-                    <p class="small subtitle animate-item delay-1">Ingresa tus credenciales para continuar.</p>
+                    <p class="small subtitle animate-item delay-1"><fmt:message key='login.subtitulo'/></p>
 
                     <c:if test="${not empty error}">
                         <div class="alert alert-custom py-2 small animate-item text-center">
@@ -292,7 +292,7 @@
                         <div class="form-group-apple animate-item delay-3">
                             <input type="password" name="password" id="passwordField" placeholder="<fmt:message key='login.contrasena'/>" required>
                             <i class="fas fa-lock fa-main"></i>
-                            <button type="button" class="toggle-password" onclick="togglePassword()" title="Mostrar/Ocultar">
+                            <button type="button" class="toggle-password" onclick="togglePassword()" title="<fmt:message key='login.mostrar.ocultar'/>">
                                 <i class="fas fa-eye" id="eyeIcon"></i>
                             </button>
                         </div>
@@ -313,7 +313,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            // Lógica para Mostrar/Ocultar Contraseña
+            // Logica para Mostrar/Ocultar Contrasena
             function togglePassword() {
                 const field = document.getElementById('passwordField');
                 const icon = document.getElementById('eyeIcon');

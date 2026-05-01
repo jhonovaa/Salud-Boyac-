@@ -86,7 +86,7 @@
                     <label class="form-label fw-bold text-secondary"><fmt:message key='consulta.documento'/></label>
                     <div class="input-group input-group-lg shadow-sm rounded-3">
                         <span class="input-group-text border-end-0"><i class="fas fa-id-card"></i></span>
-                        <input type="text" name="documento" class="form-control border-start-0" required placeholder="Ej: 1054321001">
+                        <input type="text" name="documento" class="form-control border-start-0" required placeholder="<fmt:message key='consulta.documento.placeholder'/>">
                     </div>
                 </div>
                 
@@ -94,7 +94,7 @@
                     <label class="form-label d-block fw-bold text-secondary mb-3"><fmt:message key='consulta.captcha'/></label>
                     
                     <div class="mb-3">
-                        <img src="${captchaImage}" class="border rounded-3 shadow-sm bg-white" alt="Captcha" style="max-width: 100%; height: auto;">
+                        <img src="${captchaImage}" class="border rounded-3 shadow-sm bg-white" alt="<fmt:message key='consulta.captcha'/>" style="max-width: 100%; height: auto;">
                     </div>
                     
                     <div class="input-group input-group-lg">
@@ -112,7 +112,7 @@
             <c:if test="${not empty citasEncontradas}">
                 <div class="mt-5 border-top pt-4">
                     <h5 class="text-center fw-bold mb-4" style="color: #39A900;">
-                        <i class="fas fa-check-circle me-2"></i> Resultados Encontrados
+                        <i class="fas fa-check-circle me-2"></i> <fmt:message key='consulta.resultados.encontrados'/>
                     </h5>
                     
                     <div class="table-responsive rounded-3 shadow-sm border">
@@ -137,7 +137,7 @@
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <a href="${pageContext.request.contextPath}/pdf?id=${c.id}" class="btn btn-sm btn-outline-danger px-3 rounded-pill" title="Descargar PDF">
+                                            <a href="${pageContext.request.contextPath}/pdf?id=${c.id}" class="btn btn-sm btn-outline-danger px-3 rounded-pill" title="<fmt:message key='cita.descargar'/>">
                                                 <i class="fas fa-file-pdf me-1"></i> PDF
                                             </a>
                                         </td>

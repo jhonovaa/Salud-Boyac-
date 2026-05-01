@@ -19,7 +19,7 @@
 
     <style>
         :root {
-            /* Colores Institucionales SaludBoyacá */
+            /* Colores Institucionales SaludBoyaca */
             --color-primario: #1A5276;
             --color-sena: #39A900;
             --acento-celeste: #2E86C1;
@@ -31,7 +31,7 @@
             --alerta-error: #FADBD8;
             --texto-error: #E74C3C;
             --login-card: #D6EAF8;
-            /* Color específico de OTP/Seguridad */
+            /* Color especifico de OTP/Seguridad */
             --otp-morado: #6C3483;
         }
 
@@ -150,7 +150,7 @@
             margin-bottom: 25px;
         }
 
-        /* Estilo específico para el input OTP */
+        /* Estilo especifico para el input OTP */
         .otp-input-custom {
             width: 100%;
             padding: 20px;
@@ -190,7 +190,7 @@
             box-shadow: 0 10px 20px rgba(108, 52, 131, 0.25);
         }
         .btn-custom:hover {
-            background: #512E5F; /* Un morado más oscuro para el hover */
+            background: #512E5F; /* Un morado mas oscuro para el hover */
             transform: translateY(-2px);
             box-shadow: 0 15px 25px rgba(108, 52, 131, 0.35);
             color: var(--blanco-puro);
@@ -256,8 +256,8 @@
         <div class="left-panel">
             <div class="left-content">
                 <i class="fas fa-user-shield mb-3" style="font-size: 65px; color: var(--blanco-puro);"></i>
-                <h2>Protección de Datos</h2>
-                <p>Verificamos tu identidad para mantener tu historial médico seguro.</p>
+                <h2><fmt:message key='otp.proteccion.titulo'/></h2>
+                <p><fmt:message key='otp.proteccion.desc'/></p>
             </div>
         </div>
 
@@ -291,7 +291,7 @@
                                maxlength="6" pattern="[0-9]{6}" placeholder="000000" required autofocus>
                         
                         <div class="text-center mt-2">
-                            <span class="small" style="color: var(--texto-suave);">El código expira en: </span>
+                            <span class="small" style="color: var(--texto-suave);"><fmt:message key='otp.expira'/> </span>
                             <span id="mainTimer" style="font-weight: bold; color: var(--texto-normal); transition: color 0.3s;">05:00</span>
                         </div>
                     </div>
@@ -301,7 +301,7 @@
                     </button>
                     
                     <a href="${pageContext.request.contextPath}/login" id="resendBtn" class="btn-outline-custom animate-item delay-3 disabled-link">
-                        <fmt:message key='otp.reenviar'/> <span id="resendTimerText">(Espera 60s)</span>
+                        <fmt:message key='otp.reenviar'/> <span id="resendTimerText">(<fmt:message key='otp.espera'/> 60s)</span>
                     </a>
                 </form>
             </div>
@@ -312,7 +312,10 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // --- 1. Lógica del Contador Principal (5 Minutos) ---
+            // Variable inyectada desde JSTL para la traduccion en JS
+            const textEspera = "<fmt:message key='otp.espera'/>";
+
+            // --- 1. Logica del Contador Principal (5 Minutos) ---
             let totalTime = 300; // 5 minutos en segundos
             const timerDisplay = document.getElementById("mainTimer");
 
@@ -321,7 +324,7 @@
                 let minutes = Math.floor(totalTime / 60);
                 let seconds = totalTime % 60;
                 
-                // Formatear segundos a dos dígitos
+                // Formatear segundos a dos digitos
                 if (seconds < 10) seconds = "0" + seconds;
                 
                 timerDisplay.textContent = minutes + ":" + seconds;
@@ -337,7 +340,7 @@
                 }
             }, 1000);
 
-            // --- 2. Lógica del Botón Reenviar (Espera de 60 Segundos) ---
+            // --- 2. Logica del Boton Reenviar (Espera de 60 Segundos) ---
             let resendTime = 60; 
             const resendBtn = document.getElementById("resendBtn");
             const resendText = document.getElementById("resendTimerText");
@@ -345,7 +348,7 @@
             const resendInterval = setInterval(() => {
                 resendTime--;
                 if (resendTime > 0) {
-                    resendText.textContent = "(Espera " + resendTime + "s)";
+                    resendText.textContent = "(" + textEspera + " " + resendTime + "s)";
                 } else {
                     clearInterval(resendInterval);
                     resendText.textContent = "";
@@ -354,7 +357,7 @@
                 }
             }, 1000);
             
-            // Forzar que el input solo acepte números y limitar la longitud
+            // Forzar que el input solo acepte numeros y limitar la longitud
             const otpInput = document.querySelector('.otp-input-custom');
             otpInput.addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '');

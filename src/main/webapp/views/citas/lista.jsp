@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="${sessionScope.lang}">
 <head>
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><fmt:message key='cita.titulo'/></title>
@@ -20,7 +21,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/saludboyaca.css" rel="stylesheet">
 
     <style>
-        /* Ajuste Dinámico para la Sidebar */
+        /* Ajuste Dinamico para la Sidebar */
         .main-wrapper {
             margin-left: 295px;
             padding: 2rem;
@@ -74,7 +75,7 @@
             <div class="d-flex gap-2">
                 <c:if test="${sessionScope.usuario.rol == 'MEDICO' || sessionScope.usuario.rol == 'RECEPCIONISTA'}">
                     <a href="${pageContext.request.contextPath}/citas?accion=exportarPdf" class="btn btn-outline-danger fw-bold rounded-pill px-4">
-                        <i class="fa-solid fa-file-pdf me-1"></i> Exportar PDF
+                        <i class="fa-solid fa-file-pdf me-1"></i> <fmt:message key='cita.exportar.pdf'/>
                     </a>
                 </c:if>
 
@@ -97,22 +98,22 @@
                 <form action="${pageContext.request.contextPath}/citas" method="GET" class="row g-3 align-items-end">
                     <input type="hidden" name="accion" value="listar"> 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-muted small">Filtrar por Fecha</label>
+                        <label class="form-label fw-bold text-muted small"><fmt:message key='cita.filtro.fecha'/></label>
                         <input type="date" name="fechaFiltro" class="form-control" value="${param.fechaFiltro}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold text-muted small">Estado de Cita</label>
+                        <label class="form-label fw-bold text-muted small"><fmt:message key='cita.filtro.estado'/></label>
                         <select name="estadoFiltro" class="form-select">
-                            <option value="">Todos los estados...</option>
-                            <option value="PROGRAMADA" ${param.estadoFiltro == 'PROGRAMADA' ? 'selected' : ''}>Programada</option>
-                            <option value="CONFIRMADA" ${param.estadoFiltro == 'CONFIRMADA' ? 'selected' : ''}>Confirmada</option>
-                            <option value="ATENDIDA" ${param.estadoFiltro == 'ATENDIDA' ? 'selected' : ''}>Atendida</option>
-                            <option value="CANCELADA" ${param.estadoFiltro == 'CANCELADA' ? 'selected' : ''}>Cancelada</option>
+                            <option value=""><fmt:message key='cita.filtro.todos'/></option>
+                            <option value="PROGRAMADA" ${param.estadoFiltro == 'PROGRAMADA' ? 'selected' : ''}><fmt:message key='cita.estado.programada'/></option>
+                            <option value="CONFIRMADA" ${param.estadoFiltro == 'CONFIRMADA' ? 'selected' : ''}><fmt:message key='cita.estado.confirmada'/></option>
+                            <option value="ATENDIDA" ${param.estadoFiltro == 'ATENDIDA' ? 'selected' : ''}><fmt:message key='cita.estado.atendida'/></option>
+                            <option value="CANCELADA" ${param.estadoFiltro == 'CANCELADA' ? 'selected' : ''}><fmt:message key='cita.estado.cancelada'/></option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-secondary w-100 fw-bold">
-                            <i class="fa-solid fa-filter me-2"></i>Aplicar Filtros
+                            <i class="fa-solid fa-filter me-2"></i><fmt:message key='cita.filtro.aplicar'/>
                         </button>
                     </div>
                 </form>
@@ -129,7 +130,7 @@
                                 <th><fmt:message key='cita.medico'/></th>
                                 <th><fmt:message key='cita.especialidad'/></th>
                                 <th class="text-center"><fmt:message key='cita.estado'/></th>
-                                <th class="text-center">Acciones</th>
+                                <th class="text-center"><fmt:message key='cita.acciones'/></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,7 +167,7 @@
                                                 <i class="fa-solid fa-file-pdf"></i>
                                             </a>
 
-                                            <a href="${pageContext.request.contextPath}/citas?accion=editar&id=${c.id}" class="btn btn-outline-warning" title="Reprogramar Cita" style="border-radius: 0;">
+                                            <a href="${pageContext.request.contextPath}/citas?accion=editar&id=${c.id}" class="btn btn-outline-warning" title="<fmt:message key='cita.reprogramar'/>" style="border-radius: 0;">
                                                 <i class="fa-solid fa-calendar-day"></i>
                                             </a>
                                             
@@ -174,7 +175,7 @@
                                                 <input type="hidden" name="accion" value="cambiarEstado">
                                                 <input type="hidden" name="id" value="${c.id}">
                                                 <input type="hidden" name="estado" value="CONFIRMADA">
-                                                <button type="submit" class="btn btn-outline-success" title="Confirmar Cita" style="border-radius: 0;">
+                                                <button type="submit" class="btn btn-outline-success" title="<fmt:message key='cita.confirmar'/>" style="border-radius: 0;">
                                                     <i class="fa-solid fa-check"></i>
                                                 </button>
                                             </form>
@@ -183,7 +184,7 @@
                                                 <input type="hidden" name="accion" value="cambiarEstado">
                                                 <input type="hidden" name="id" value="${c.id}">
                                                 <input type="hidden" name="estado" value="CANCELADA">
-                                                <button type="submit" class="btn btn-outline-danger" title="Cancelar Cita" style="border-radius: 0 4px 4px 0;" onclick="return confirm('¿Está seguro de cancelar esta cita?');">
+                                                <button type="submit" class="btn btn-outline-danger" title="<fmt:message key='cita.cancelar'/>" style="border-radius: 0 4px 4px 0;" onclick="return confirm('<fmt:message key='cita.confirmar.cancelar'/>');">
                                                     <i class="fa-solid fa-ban"></i>
                                                 </button>
                                             </form>
@@ -204,16 +205,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     
     <script>
         $(document).ready(function() {
             $('#tablaCitas').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-                },
                 "pageLength": 10,
                 "ordering": true,
-                "responsive": true
+                "responsive": true,
+                "language": {
+                    "sEmptyTable":     "<fmt:message key='dt.vacio'/>",
+                    "sInfo":           "<fmt:message key='dt.info'/>",
+                    "sInfoEmpty":      "<fmt:message key='dt.info.vacio'/>",
+                    "sInfoFiltered":   "<fmt:message key='dt.info.filtro'/>",
+                    "sLengthMenu":     "<fmt:message key='dt.menu'/>",
+                    "sLoadingRecords": "<fmt:message key='dt.cargando'/>",
+                    "sProcessing":     "<fmt:message key='dt.procesando'/>",
+                    "sSearch":         "<fmt:message key='dt.buscar'/>",
+                    "sZeroRecords":    "<fmt:message key='dt.cero'/>",
+                    "oPaginate": {
+                        "sFirst":    "<fmt:message key='dt.pag.primero'/>",
+                        "sLast":     "<fmt:message key='dt.pag.ultimo'/>",
+                        "sNext":     "<fmt:message key='dt.pag.siguiente'/>",
+                        "sPrevious": "<fmt:message key='dt.pag.anterior'/>"
+                    }
+                }
             });
         });
     </script>

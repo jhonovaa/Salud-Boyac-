@@ -28,7 +28,7 @@
                 <h2 class="display-5 fw-bold" style="color: var(--texto-titulos);">
                     <fmt:message key='app.institucion'/>
                 </h2>
-                <p class="lead text-muted">Gestion integral de servicios de salud para Paipa, Boyaca.</p>
+                <p class="lead text-muted"><fmt:message key='index.subtitulo'/></p>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                     <div class="card-body p-5 text-center">
                         <i class="fas fa-calendar-check fa-4x mb-4" style="color: var(--color-sena);"></i>
                         <h3 class="fw-bold"><fmt:message key='nav.consulta'/></h3>
-                        <p class="text-muted">Consulte y descargue su comprobante de cita medica sin necesidad de cuenta.</p>
+                        <p class="text-muted"><fmt:message key='index.consulta.desc'/></p>
                         <a href="${pageContext.request.contextPath}/consulta-cita" class="btn btn-lg w-100 mt-3 text-white" style="background-color: var(--color-sena); border:none; border-radius: 12px; font-weight: 600;">
                             <fmt:message key='consulta.buscar'/>
                         </a>
@@ -53,7 +53,7 @@
                     <div class="card-body p-5 text-center">
                         <i class="fas fa-user-md fa-4x mb-4" style="color: var(--color-primario);"></i>
                         <h3 class="fw-bold"><fmt:message key='login.titulo'/></h3>
-                        <p class="text-muted">Acceso exclusivo para Medicos, Enfermeros y Personal Administrativo.</p>
+                        <p class="text-muted"><fmt:message key='index.login.desc'/></p>
                         <a href="${pageContext.request.contextPath}/login" class="btn btn-lg w-100 mt-3 btn-saludboyaca text-white" style="background-color: var(--color-primario); border-radius: 12px; font-weight: 600;">
                             <fmt:message key='login.ingresar'/>
                         </a>

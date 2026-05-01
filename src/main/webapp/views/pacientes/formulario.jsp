@@ -17,7 +17,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/saludboyaca.css" rel="stylesheet">
 
     <style>
-        /* Ajuste Dinámico para la Sidebar */
+        /* Ajuste Dinamico para la Sidebar */
         .main-wrapper {
             margin-left: 295px;
             padding: 2rem;

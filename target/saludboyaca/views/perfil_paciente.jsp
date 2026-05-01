@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaludBoyaca - Perfil del Paciente</title>
+    <title><fmt:message key="app.nombre"/> - <fmt:message key="paciente.titulo"/></title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -79,7 +79,7 @@
                         
                         <div class="col-12">
                             <h6 class="text-primary mb-2 border-start border-3 border-primary ps-2">
-                                <i class="fas fa-id-card icon-accent"></i>Identificacion
+                                <i class="fas fa-id-card icon-accent"></i><fmt:message key="paciente.identificacion" />
                             </h6>
                         </div>
                         <div class="col-sm-6">
@@ -87,13 +87,13 @@
                             <div class="data-value">${paciente.documento}</div>
                         </div>
                         <div class="col-sm-6">
-                            <label class="data-label">Nombres Completos</label>
+                            <label class="data-label"><fmt:message key="paciente.nombres.completos" /></label>
                             <div class="data-value">${paciente.nombres} ${paciente.apellidos}</div>
                         </div>
 
                         <div class="col-12 mt-3">
                             <h6 class="text-primary mb-2 border-start border-3 border-primary ps-2">
-                                <i class="fas fa-map-marker-alt icon-accent"></i>Contacto
+                                <i class="fas fa-map-marker-alt icon-accent"></i><fmt:message key="paciente.contacto" />
                             </h6>
                         </div>
                         <div class="col-sm-6">
@@ -101,13 +101,13 @@
                             <div class="data-value">${paciente.telefono}</div>
                         </div>
                         <div class="col-sm-6">
-                            <label class="data-label">Correo</label>
+                            <label class="data-label"><fmt:message key="paciente.correo" /></label>
                             <div class="data-value">${paciente.email}</div>
                         </div>
 
                         <div class="col-12 mt-3">
                             <h6 class="text-primary mb-2 border-start border-3 border-primary ps-2">
-                                <i class="fas fa-hospital icon-accent"></i>Datos Medicos
+                                <i class="fas fa-hospital icon-accent"></i><fmt:message key="paciente.datos.medicos" />
                             </h6>
                         </div>
                         <div class="col-sm-6">
