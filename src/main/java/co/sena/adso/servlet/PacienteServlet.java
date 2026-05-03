@@ -24,12 +24,17 @@ public class PacienteServlet extends HttpServlet {
 
         switch (accion) {
             case "listar":
-                // CORRECCIÓN: Descomentado para que envíe los datos a la tabla
                 List<Paciente> lista = dao.listarTodos();
                 request.setAttribute("pacientes", lista);
                 request.getRequestDispatcher("/views/pacientes/lista.jsp").forward(request, response);
                 break;
             case "nuevo":
+                request.getRequestDispatcher("/views/pacientes/formulario.jsp").forward(request, response);
+                break;
+            case "editar":
+                int idEditar = Integer.parseInt(request.getParameter("id"));
+                Paciente paciente = dao.buscarPorId(idEditar); 
+                request.setAttribute("paciente", paciente);
                 request.getRequestDispatcher("/views/pacientes/formulario.jsp").forward(request, response);
                 break;
             default:
@@ -51,18 +56,44 @@ public class PacienteServlet extends HttpServlet {
             p.setTelefono(request.getParameter("telefono"));
             p.setEps(request.getParameter("eps"));
             
-            // Validamos campos que tu formulario no tiene obligatorios para evitar valores "null" en la DB
             String email = request.getParameter("email");
             p.setEmail(email != null ? email : "");
             
             String veredaBarrio = request.getParameter("veredaBarrio");
             p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
             
-            // CORRECCIÓN: Descomentado para guardar realmente en la base de datos
             dao.insertar(p); 
-            
-            // Enviamos mensaje=ok para que dispare la alerta de éxito en la lista
             response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+            
+        } else if ("actualizar".equals(accion)) {
+            Paciente p = new Paciente();
+            p.setId(Integer.parseInt(request.getParameter("id"))); 
+            p.setNombres(request.getParameter("nombres"));
+            p.setApellidos(request.getParameter("apellidos"));
+            p.setDocumento(request.getParameter("documento"));
+            p.setFechaNacimiento(Date.valueOf(request.getParameter("fechaNacimiento")));
+            p.setTelefono(request.getParameter("telefono"));
+            p.setEps(request.getParameter("eps"));
+            
+            String email = request.getParameter("email");
+            p.setEmail(email != null ? email : "");
+            
+            String veredaBarrio = request.getParameter("veredaBarrio");
+            p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
+            
+            dao.actualizar(p); 
+            response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+            
+        } else if ("eliminar".equals(accion)) {
+            // CORRECCIÓN AQUÍ: Validamos si dio error de Base de Datos para no redirigir con un "ok" falso
+            int idEliminar = Integer.parseInt(request.getParameter("id"));
+            boolean exito = dao.eliminar(idEliminar);
+            
+            if (exito) {
+                response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=error_citas");
+            }
         }
     }
 }

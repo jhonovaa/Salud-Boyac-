@@ -10,34 +10,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><fmt:message key='cita.nueva'/></title>
+    <title>
+        <c:choose>
+            <c:when test="${not empty cita}">Editar Cita Médica</c:when>
+            <c:otherwise>Programar Cita Médica</c:otherwise>
+        </c:choose>
+    </title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-    
     <link href="${pageContext.request.contextPath}/resources/css/saludboyaca.css" rel="stylesheet">
 
     <style>
-        /* Ajuste Dinamico para la Sidebar */
         .main-wrapper {
             margin-left: 295px;
             padding: 2rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .top-navbar {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1rem 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--acento-celeste);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
         .form-card {
             background: var(--blanco-puro);
             border-radius: 20px;
@@ -45,7 +34,10 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             border-top: 4px solid var(--color-primario);
         }
-
+        .form-select, .form-control {
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+        }
         @media (max-width: 992px) {
             .main-wrapper {
                 margin-left: 0;
@@ -55,166 +47,198 @@
     </style>
 </head>
 <body>
-
+    
     <jsp:include page="/views/templates/sidebar.jsp" />
 
     <div class="main-wrapper">
-        
-        <header class="top-navbar d-flex justify-content-between align-items-center">
-            <h4 class="fw-bold mb-0" style="color: var(--texto-titulos);">
-                <i class="fa-solid fa-calendar-plus me-2"></i><fmt:message key='cita.nueva'/>
-            </h4>
-            <a href="${pageContext.request.contextPath}/citas" class="btn btn-outline-secondary fw-bold rounded-pill px-4">
-                <i class="fa-solid fa-arrow-left me-1"></i> <fmt:message key='cita.volver'/>
-            </a>
-        </header>
+        <div class="form-card">
+            <form action="${pageContext.request.contextPath}/citas" method="POST">
+                <input type="hidden" name="accion" value="${not empty cita ? 'actualizar' : 'insertar'}">
+                
+                <c:if test="${not empty cita}">
+                    <input type="hidden" name="id" value="${cita.id}">
+                </c:if>
 
-        <div class="container-fluid px-0">
-            
-            <div class="form-card">
-                <form action="${pageContext.request.contextPath}/citas" method="POST" id="formNuevaCita">
-                    <input type="hidden" name="accion" value="insertar">
-                    
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-6">
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.paciente'/></label>
-                                <select name="idPaciente" id="idPaciente" class="form-select select2-paciente" required>
-                                    <option value=""><fmt:message key='cita.buscar.paciente'/></option>
-                                    <c:forEach var="p" items="${pacientes}">
-                                        <option value="${p.id}">${p.documento} - ${p.nombres} ${p.apellidos}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.especialidad'/></label>
-                                <select name="idEspecialidad" id="idEspecialidad" class="form-select" required>
-                                    <option value=""><fmt:message key='cita.seleccione.especialidad'/></option>
-                                    <c:forEach var="e" items="${especialidades}">
-                                        <option value="${e.id}">${e.nombre}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.medico'/></label>
-                                <select name="idMedico" id="idMedico" class="form-select" required disabled>
-                                    <option value=""><fmt:message key='cita.primero.especialidad'/></option>
-                                </select>
-                            </div>
-
+                <div class="row g-4 mb-4">
+                    <!-- Columna Izquierda -->
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--texto-normal);">Paciente</label>
+                            <select name="idPaciente" id="idPaciente" class="form-select border-secondary border-opacity-25" required>
+                                <option value="">Seleccione un paciente...</option>
+                                <c:forEach var="p" items="${pacientes}">
+                                    <option value="${p.id}" ${not empty cita && cita.idPaciente == p.id ? 'selected' : ''}>
+                                        ${p.documento} - ${p.nombres} ${p.apellidos}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--texto-normal);">Especialidad</label>
+                            <select name="idEspecialidad" id="idEspecialidad" class="form-select border-secondary border-opacity-25" required>
+                                <option value="">Seleccione especialidad...</option>
+                                <c:forEach var="e" items="${especialidades}">
+                                    <option value="${e.id}" ${not empty cita && cita.idEspecialidad == e.id ? 'selected' : ''}>
+                                        ${e.nombre}
+                                    </option>
+                                </c:forEach>
+                            </select>
                         </div>
 
-                        <div class="col-md-6">
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.fecha'/></label>
-                                <input type="date" name="fechaCita" id="fechaCita" class="form-control" required>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.hora'/></label>
-                                <select name="horaCita" id="horaCita" class="form-select" required disabled>
-                                    <option value=""><fmt:message key='cita.seleccione.medico.fecha'/></option>
-                                </select>
-                            </div>
-
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--texto-normal);">Médico</label>
+                            <select name="idMedico" id="idMedico" class="form-select border-secondary border-opacity-25 bg-light" required disabled>
+                                <option value="">Seleccione primero una especialidad</option>
+                            </select>
+                            <!-- Input oculto para preseleccionar médico en modo Edición -->
+                            <input type="hidden" id="medicoActual" value="${not empty cita ? cita.idMedico : ''}">
                         </div>
                     </div>
 
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='cita.motivo'/></label>
-                            <textarea name="motivo" class="form-control" rows="3" placeholder="<fmt:message key='cita.motivo.placeholder'/>" required></textarea>
+                    <!-- Columna Derecha -->
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--texto-normal);">Fecha</label>
+                            <input type="date" name="fechaCita" id="fechaCita" class="form-control border-secondary border-opacity-25" value="${not empty cita ? cita.fechaCita : ''}" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--texto-normal);">Hora</label>
+                            <select name="horaCita" id="horaCita" class="form-select border-secondary border-opacity-25 bg-light" required disabled>
+                                <option value="">Esperando fecha y médico...</option>
+                            </select>
+                            <!-- Input oculto para preseleccionar hora en modo Edición -->
+                            <input type="hidden" id="horaActual" value="${not empty cita ? cita.horaCita : ''}">
                         </div>
                     </div>
+                </div>
 
-                    <hr class="mb-4" style="opacity: 0.1;">
-
-                    <div class="text-end">
-                        <a href="${pageContext.request.contextPath}/citas" class="btn btn-secondary px-4 py-2 fw-bold" style="border-radius: 12px;">
-                            <fmt:message key='cita.cancelar.btn'/>
-                        </a>
-                        <button type="submit" class="btn btn-saludboyaca ms-2 px-4 py-2 fw-bold" style="border-radius: 12px;">
-                            <i class="fa-solid fa-calendar-check me-2"></i><fmt:message key='cita.programar'/>
-                        </button>
+                <!-- Fila Completa -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <label class="form-label fw-bold" style="color: var(--texto-normal);">Motivo de la Consulta</label>
+                        <textarea name="motivo" class="form-control border-secondary border-opacity-25" rows="4" placeholder="Describa brevemente el motivo de la consulta...">${not empty cita ? cita.motivo : ''}</textarea>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <hr class="mb-4" style="opacity: 0.1;">
+
+                <div class="text-end">
+                    <a href="${pageContext.request.contextPath}/citas" class="btn btn-secondary px-4 py-2 fw-bold" style="border-radius: 8px;">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-saludboyaca ms-2 px-4 py-2 fw-bold" style="border-radius: 8px;">
+                        <i class="fa-solid fa-calendar-check me-2"></i>Programar Cita
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     <script>
         $(document).ready(function() {
-            // 1. Inicializar Select2 para busqueda de Pacientes
-            $('.select2-paciente').select2({
-                theme: 'bootstrap-5',
-                placeholder: '<fmt:message key="cita.js.buscar.paciente"/>',
-                width: '100%'
-            });
+            const ctx = '${pageContext.request.contextPath}';
+            const espSelect = $('#idEspecialidad');
+            const medSelect = $('#idMedico');
+            const fecInput = $('#fechaCita');
+            const horSelect = $('#horaCita');
+            
+            const medicoActual = $('#medicoActual').val();
+            const horaActual = $('#horaActual').val();
 
-            // 2. Logica AJAX: Especialidad -> Cargar Medicos
-            $('#idEspecialidad').change(function() {
-                const especialidadId = $(this).val();
-                const medicoSelect = $('#idMedico');
-                
-                // Reiniciar campos dependientes
-                medicoSelect.html('<option value=""><fmt:message key="cita.js.cargando.medicos"/></option>').prop('disabled', true);
-                $('#horaCita').html('<option value=""><fmt:message key="cita.seleccione.medico.fecha"/></option>').prop('disabled', true);
+            // 1. CARGAR MÉDICOS
+            function cargarMedicos(idEspecialidad, cb) {
+                medSelect.html('<option value="">Cargando médicos...</option>').prop('disabled', true).addClass('bg-light');
+                horSelect.html('<option value="">Esperando médico...</option>').prop('disabled', true).addClass('bg-light');
 
-                if (especialidadId) {
-                    fetch('${pageContext.request.contextPath}/citas?accion=cargarMedicos&idEspecialidad=' + especialidadId)
-                        .then(response => response.json())
-                        .then(data => {
-                            medicoSelect.html('<option value=""><fmt:message key="cita.js.seleccione.medico"/></option>');
-                            data.forEach(medico => {
-                                medicoSelect.append('<option value="' + medico.id + '"><fmt:message key="cita.js.dr"/> ' + medico.nombre + '</option>');
+                if (!idEspecialidad) {
+                    medSelect.html('<option value="">Seleccione primero una especialidad</option>');
+                    return;
+                }
+
+                $.ajax({
+                    url: ctx + '/citas?accion=cargarMedicos',
+                    type: 'GET',
+                    data: { idEspecialidad: idEspecialidad },
+                    dataType: 'json',
+                    success: function(data) {
+                        medSelect.empty().append('<option value="">Seleccione un médico...</option>');
+                        if(data.length === 0) {
+                            medSelect.append('<option value="" disabled>No hay médicos registrados en esta especialidad</option>');
+                        } else {
+                            $.each(data, function(i, m) {
+                                let sel = (medicoActual == m.id) ? 'selected' : '';
+                                medSelect.append('<option value="'+m.id+'" '+sel+'>Dr(a). '+m.nombre+'</option>');
                             });
-                            medicoSelect.prop('disabled', false);
-                        })
-                        .catch(error => {
-                            console.error('Error cargando medicos:', error);
-                            medicoSelect.html('<option value=""><fmt:message key="cita.js.error.medicos"/></option>');
-                        });
-                } else {
-                    medicoSelect.html('<option value=""><fmt:message key="cita.primero.especialidad"/></option>');
+                            medSelect.prop('disabled', false).removeClass('bg-light');
+                            if(cb) cb(); 
+                        }
+                    },
+                    error: function() {
+                        alert("Error al conectar con el servidor para cargar médicos.");
+                    }
+                });
+            }
+
+            // 2. CARGAR HORARIOS
+            function cargarHorarios() {
+                let idMed = medSelect.val();
+                let fecCita = fecInput.val();
+
+                if (!idMed || !fecCita) {
+                    horSelect.html('<option value="">Esperando fecha y médico...</option>').prop('disabled', true).addClass('bg-light');
+                    return;
                 }
+
+                horSelect.html('<option value="">Consultando disponibilidad...</option>').prop('disabled', true).addClass('bg-light');
+
+                $.ajax({
+                    url: ctx + '/citas?accion=cargarHorarios',
+                    type: 'GET',
+                    data: { idMedico: idMed, fechaCita: fecCita },
+                    dataType: 'json',
+                    success: function(data) {
+                        horSelect.empty();
+                        if(data.length === 0) {
+                            horSelect.append('<option value="" disabled selected>No hay horarios disponibles</option>');
+                            horSelect.prop('disabled', true).addClass('bg-light');
+                        } else {
+                            horSelect.append('<option value="">Seleccione una hora libre...</option>');
+                            $.each(data, function(i, h) {
+                                let horaLimpia = h.substring(0, 5); 
+                                let currentLimpia = horaActual ? horaActual.substring(0, 5) : '';
+                                let sel = (currentLimpia === horaLimpia) ? 'selected' : '';
+                                horSelect.append('<option value="'+horaLimpia+'" '+sel+'>'+horaLimpia+'</option>');
+                            });
+                            horSelect.prop('disabled', false).removeClass('bg-light');
+                        }
+                    },
+                    error: function() {
+                        horSelect.html('<option value="" disabled>Error de conexión</option>');
+                    }
+                });
+            }
+
+            // EVENTOS (¡Aquí estaba la magia faltante!)
+            espSelect.change(function() {
+                cargarMedicos($(this).val());
             });
 
-            // 3. Logica AJAX: Medico + Fecha -> Cargar Horas Disponibles
-            $('#idMedico, #fechaCita').change(function() {
-                const medicoId = $('#idMedico').val();
-                const fecha = $('#fechaCita').val();
-                const horaSelect = $('#horaCita');
+            fecInput.change(cargarHorarios);
+            medSelect.change(cargarHorarios);
 
-                if (medicoId && fecha) {
-                    horaSelect.html('<option value=""><fmt:message key="cita.js.buscando.disponibilidad"/></option>').prop('disabled', true);
-
-                    fetch('${pageContext.request.contextPath}/citas?accion=cargarHorarios&idMedico=' + medicoId + '&fecha=' + fecha)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.length > 0) {
-                                horaSelect.html('<option value=""><fmt:message key="cita.js.seleccione.hora"/></option>');
-                                data.forEach(hora => {
-                                    horaSelect.append('<option value="' + hora + '">' + hora + '</option>');
-                                });
-                                horaSelect.prop('disabled', false);
-                            } else {
-                                horaSelect.html('<option value=""><fmt:message key="cita.js.sin.horarios"/></option>');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error cargando horarios:', error);
-                            horaSelect.html('<option value=""><fmt:message key="cita.js.error.horas"/></option>');
-                        });
-                }
-            });
+            // AUTO-CARGA AL ABRIR EL FORMULARIO (Útil para modo Edición)
+            if (espSelect.val() !== '') {
+                cargarMedicos(espSelect.val(), function() {
+                    if (fecInput.val() !== '') {
+                        cargarHorarios();
+                    }
+                });
+            }
         });
     </script>
 </body>

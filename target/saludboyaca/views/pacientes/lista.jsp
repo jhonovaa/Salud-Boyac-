@@ -5,6 +5,9 @@
 <fmt:setLocale value="${sessionScope.lang == null ? 'es' : sessionScope.lang}" />
 <fmt:setBundle basename="messages"/>
 
+<%-- Solución al choque de comillas en JavaScript: Guardamos el mensaje en una variable --%>
+<fmt:message key="paciente.confirmar" var="msgConfirmar" />
+
 <!DOCTYPE html>
 <html lang="${sessionScope.lang}">
 <head>
@@ -63,10 +66,14 @@
             <h4 class="fw-bold mb-0" style="color: var(--texto-titulos);">
                 <i class="fa-solid fa-users me-2"></i><fmt:message key='paciente.titulo'/>
             </h4>
+            
             <div class="d-flex gap-2">
-                <a href="${pageContext.request.contextPath}/pacientes?accion=nuevo" class="btn btn-saludboyaca fw-bold rounded-pill px-4">
-                    <i class="fa-solid fa-user-plus me-1"></i> <fmt:message key='paciente.nuevo'/>
-                </a>
+                <%-- FILTRO DE SEGURIDAD: Solo la Recepcionista puede ver el botón de Nuevo Paciente --%>
+                <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
+                    <a href="${pageContext.request.contextPath}/pacientes?accion=nuevo" class="btn btn-saludboyaca fw-bold rounded-pill px-4">
+                        <i class="fa-solid fa-user-plus me-1"></i> <fmt:message key='paciente.nuevo'/>
+                    </a>
+                </c:if>
             </div>
         </header>
 
@@ -75,6 +82,14 @@
             <c:if test="${param.mensaje == 'ok'}">
                 <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" style="background-color: var(--alerta-exito); color: var(--color-sena); border-radius: 15px;">
                     <i class="fa-solid fa-check-circle me-2"></i><fmt:message key='alerta.exito'/>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:if>
+
+            <%-- CORRECCIÓN AQUÍ: Alerta roja para cuando la BD no nos deja eliminar por culpa de las Citas (FK) --%>
+            <c:if test="${param.mensaje == 'error_citas'}">
+                <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm" style="background-color: var(--alerta-error); color: #721c24; border-radius: 15px;">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>No se puede eliminar el paciente porque tiene citas médicas vinculadas en el sistema.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
@@ -89,6 +104,11 @@
                                 <th><fmt:message key='paciente.apellidos'/></th>
                                 <th><fmt:message key='paciente.eps'/></th>
                                 <th><fmt:message key='paciente.telefono'/></th>
+                                
+                                <%-- FILTRO DE SEGURIDAD: Solo si es RECEPCIONISTA mostramos la columna Acciones --%>
+                                <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
+                                    <th class="text-center">Acciones</th>
+                                </c:if>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,6 +128,24 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
+                                    
+                                    <%-- FILTRO DE SEGURIDAD: Botones de Editar y Eliminar solo para RECEPCIONISTA --%>
+                                    <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-sm shadow-sm">
+                                                <a href="${pageContext.request.contextPath}/pacientes?accion=editar&id=${p.id}" class="btn btn-outline-warning" title="<fmt:message key='paciente.editar'/>" style="border-radius: 4px 0 0 4px;">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+                                                <form action="${pageContext.request.contextPath}/pacientes" method="POST" class="d-inline m-0 p-0">
+                                                    <input type="hidden" name="accion" value="eliminar">
+                                                    <input type="hidden" name="id" value="${p.id}">
+                                                    <button type="submit" class="btn btn-outline-danger" title="<fmt:message key='paciente.eliminar'/>" style="border-radius: 0 4px 4px 0;" onclick="return confirm('${msgConfirmar}');">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
