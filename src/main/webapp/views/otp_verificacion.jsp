@@ -66,7 +66,7 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 40px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(108, 52, 131, 0.15); /* Sombra ligeramente morada */
+            box-shadow: 0 20px 60px rgba(108, 52, 131, 0.15);
             animation: cardScale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
@@ -83,7 +83,6 @@
             content: '';
             position: absolute;
             inset: 0;
-            /* Gradiente mezclando el Azul Primario con el Morado OTP */
             background: linear-gradient(135deg, rgba(26, 82, 118, 0.9) 0%, rgba(108, 52, 131, 0.85) 100%);
             z-index: 1;
         }
@@ -150,7 +149,6 @@
             margin-bottom: 25px;
         }
 
-        /* Estilo especifico para el input OTP */
         .otp-input-custom {
             width: 100%;
             padding: 20px;
@@ -190,7 +188,7 @@
             box-shadow: 0 10px 20px rgba(108, 52, 131, 0.25);
         }
         .btn-custom:hover {
-            background: #512E5F; /* Un morado mas oscuro para el hover */
+            background: #512E5F;
             transform: translateY(-2px);
             box-shadow: 0 15px 25px rgba(108, 52, 131, 0.35);
             color: var(--blanco-puro);
@@ -231,7 +229,6 @@
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.5s; }
 
-        /* NUEVO: Clases para deshabilitar el enlace de reenviar */
         .disabled-link {
             pointer-events: none;
             opacity: 0.6;
@@ -312,11 +309,9 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Variable inyectada desde JSTL para la traduccion en JS
             const textEspera = "<fmt:message key='otp.espera'/>";
 
-            // --- 1. Logica del Contador Principal (5 Minutos) ---
-            let totalTime = 300; // 5 minutos en segundos
+            let totalTime = 300; 
             const timerDisplay = document.getElementById("mainTimer");
 
             const mainInterval = setInterval(() => {
@@ -324,12 +319,10 @@
                 let minutes = Math.floor(totalTime / 60);
                 let seconds = totalTime % 60;
                 
-                // Formatear segundos a dos digitos
                 if (seconds < 10) seconds = "0" + seconds;
                 
                 timerDisplay.textContent = minutes + ":" + seconds;
 
-                // Cambiar a ROJO cuando quede menos de 60 segundos
                 if (totalTime < 60) {
                     timerDisplay.style.color = "var(--texto-error)";
                 }
@@ -340,7 +333,6 @@
                 }
             }, 1000);
 
-            // --- 2. Logica del Boton Reenviar (Espera de 60 Segundos) ---
             let resendTime = 60; 
             const resendBtn = document.getElementById("resendBtn");
             const resendText = document.getElementById("resendTimerText");
@@ -352,12 +344,10 @@
                 } else {
                     clearInterval(resendInterval);
                     resendText.textContent = "";
-                    // Habilitar el enlace para que el usuario pueda hacer clic
                     resendBtn.classList.remove("disabled-link");
                 }
             }, 1000);
             
-            // Forzar que el input solo acepte numeros y limitar la longitud
             const otpInput = document.querySelector('.otp-input-custom');
             otpInput.addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '');

@@ -1,30 +1,30 @@
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\filter\LocaleFilter.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\EspecialidadDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\util\PDFGenerator.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\CitaServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\UsuarioDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\util\OTPService.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dto\Cita.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\filter\AuthFilter.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\HorarioServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\UsuarioServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\OTPServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\config\ConexionDB.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\CitaDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PacienteServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dto\Especialidad.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\DashboardServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\config\ConnectionFactory.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\HorarioDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dto\Horario.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dto\Paciente.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\model\Conexion.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\ConsultaCitaServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PDFPacienteServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\util\CaptchaGenerator.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\OTPTokenDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dto\Usuario.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PdfServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\dao\PacienteDAO.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\LoginServlet.java
-c:\Users\angel\OneDrive\Desktop\Ejercicios Java\Salud-Boyac-\src\main\java\co\sena\adso\servlet\LogoutServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\UsuarioServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\LoginServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\config\ConexionDB.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PdfServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\util\OTPService.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dto\Horario.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dto\Usuario.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dto\Cita.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\util\CaptchaGenerator.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\HorarioDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\ConsultaCitaServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\config\ConnectionFactory.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\PacienteDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dto\Paciente.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\CitaServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\OTPTokenDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\HorarioServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PacienteServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\PDFPacienteServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\EspecialidadDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\model\Conexion.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\filter\AuthFilter.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dto\Especialidad.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\CitaDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\LogoutServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\DashboardServlet.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\filter\LocaleFilter.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\util\PDFGenerator.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\dao\UsuarioDAO.java
+c:\Users\salaz\Desktop\salud-boyac\Salud-Boyac-\src\main\java\co\sena\adso\servlet\OTPServlet.java

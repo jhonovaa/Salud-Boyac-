@@ -11,7 +11,7 @@
     <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horarios Médicos</title>
+    <title><fmt:message key='horario.titulo'/></title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -59,13 +59,13 @@
         
         <header class="top-navbar d-flex justify-content-between align-items-center">
             <h4 class="fw-bold mb-0" style="color: var(--texto-titulos);">
-                <i class="fa-regular fa-clock me-2"></i>Horarios de Atención
+                <i class="fa-regular fa-clock me-2"></i><fmt:message key='horario.titulo'/>
             </h4>
             
             <%-- FILTRO: Solo Recepcionista puede crear horarios --%>
             <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
                 <a href="${pageContext.request.contextPath}/horarios?accion=nuevo" class="btn btn-saludboyaca fw-bold rounded-pill px-4">
-                    <i class="fa-solid fa-plus me-1"></i> Asignar Horario
+                    <i class="fa-solid fa-plus me-1"></i> <fmt:message key='horario.asignar'/>
                 </a>
             </c:if>
         </header>
@@ -74,7 +74,7 @@
 
             <c:if test="${param.mensaje == 'ok'}">
                 <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" style="background-color: var(--alerta-exito); color: var(--color-sena); border-radius: 15px;">
-                    <i class="fa-solid fa-check-circle me-2"></i>Operación realizada con éxito.
+                    <i class="fa-solid fa-check-circle me-2"></i><fmt:message key='alerta.exito'/>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
@@ -84,26 +84,26 @@
                     <table id="tablaHorarios" class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <%-- FILTRO: Ocultar columna de Médico si el que loguea es un Médico --%>
+                                <%-- FILTRO: Ocultar columna de Medico si el que loguea es un Medico --%>
                                 <c:if test="${sessionScope.usuario.rol != 'MEDICO'}">
-                                    <th>Médico Asignado</th>
+                                    <th><fmt:message key='horario.medico'/></th>
                                 </c:if>
                                 
-                                <th>Día de la Semana</th>
-                                <th>Hora Inicio</th>
-                                <th>Hora Fin</th>
-                                <th class="text-center">Máx. Citas</th>
+                                <th><fmt:message key='horario.dia'/></th>
+                                <th><fmt:message key='horario.hora.inicio'/></th>
+                                <th><fmt:message key='horario.hora.fin'/></th>
+                                <th class="text-center"><fmt:message key='horario.max.citas'/></th>
                                 
                                 <%-- FILTRO: Columna de acciones solo para Recepcionista --%>
                                 <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
-                                    <th class="text-center">Acciones</th>
+                                    <th class="text-center"><fmt:message key='horario.acciones'/></th>
                                 </c:if>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="h" items="${horarios}">
                                 <tr>
-                                    <%-- FILTRO: Ocultar celda de Médico si el que loguea es un Médico --%>
+                                    <%-- FILTRO: Ocultar celda de Medico si el que loguea es un Medico --%>
                                     <c:if test="${sessionScope.usuario.rol != 'MEDICO'}">
                                         <td class="fw-bold">
                                             <i class="fa-solid fa-user-doctor text-muted me-2"></i>${h.medicoNombre}
@@ -112,14 +112,14 @@
                                     
                                     <td class="fw-bold" style="color: var(--texto-normal);">
                                         <c:choose>
-                                            <c:when test="${h.diaSemana == 1}">Lunes</c:when>
-                                            <c:when test="${h.diaSemana == 2}">Martes</c:when>
-                                            <c:when test="${h.diaSemana == 3}">Miércoles</c:when>
-                                            <c:when test="${h.diaSemana == 4}">Jueves</c:when>
-                                            <c:when test="${h.diaSemana == 5}">Viernes</c:when>
-                                            <c:when test="${h.diaSemana == 6}">Sábado</c:when>
-                                            <c:when test="${h.diaSemana == 7}">Domingo</c:when>
-                                            <c:otherwise>No definido</c:otherwise>
+                                            <c:when test="${h.diaSemana == 1}"><fmt:message key='dia.lunes'/></c:when>
+                                            <c:when test="${h.diaSemana == 2}"><fmt:message key='dia.martes'/></c:when>
+                                            <c:when test="${h.diaSemana == 3}"><fmt:message key='dia.miercoles'/></c:when>
+                                            <c:when test="${h.diaSemana == 4}"><fmt:message key='dia.jueves'/></c:when>
+                                            <c:when test="${h.diaSemana == 5}"><fmt:message key='dia.viernes'/></c:when>
+                                            <c:when test="${h.diaSemana == 6}"><fmt:message key='dia.sabado'/></c:when>
+                                            <c:when test="${h.diaSemana == 7}"><fmt:message key='dia.domingo'/></c:when>
+                                            <c:otherwise><fmt:message key='dia.nodefinido'/></c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td><i class="fa-regular fa-hourglass-half text-success me-1"></i> ${h.horaInicio}</td>
@@ -138,7 +138,7 @@
                                                 <form action="${pageContext.request.contextPath}/horarios" method="POST" class="d-inline m-0 p-0">
                                                     <input type="hidden" name="accion" value="eliminar">
                                                     <input type="hidden" name="id" value="${h.id}">
-                                                    <button type="submit" class="btn btn-outline-danger" style="border-radius: 0 4px 4px 0;" onclick="return confirm('¿Está seguro de eliminar este horario?');">
+                                                    <button type="submit" class="btn btn-outline-danger" style="border-radius: 0 4px 4px 0;" onclick="return confirm('<fmt:message key='horario.confirmar.eliminar'/>');">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -169,15 +169,20 @@
                 "ordering": true,
                 "responsive": true,
                 "language": {
-                    "sEmptyTable":     "No hay datos",
-                    "sInfo":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-                    "sInfoEmpty":      "Mostrando 0 a 0 de 0 entradas",
-                    "sInfoFiltered":   "(filtrado de _MAX_ totales)",
-                    "sLengthMenu":     "Mostrar _MENU_ entradas",
-                    "sSearch":         "Buscar:",
-                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "<fmt:message key='dt.vacio'/>",
+                    "sInfo":           "<fmt:message key='dt.info'/>",
+                    "sInfoEmpty":      "<fmt:message key='dt.info.vacio'/>",
+                    "sInfoFiltered":   "<fmt:message key='dt.info.filtro'/>",
+                    "sLengthMenu":     "<fmt:message key='dt.menu'/>",
+                    "sLoadingRecords": "<fmt:message key='dt.cargando'/>",
+                    "sProcessing":     "<fmt:message key='dt.procesando'/>",
+                    "sSearch":         "<fmt:message key='dt.buscar'/>",
+                    "sZeroRecords":    "<fmt:message key='dt.cero'/>",
                     "oPaginate": {
-                        "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior"
+                        "sFirst":    "<fmt:message key='dt.pag.primero'/>",
+                        "sLast":     "<fmt:message key='dt.pag.ultimo'/>",
+                        "sNext":     "<fmt:message key='dt.pag.siguiente'/>",
+                        "sPrevious": "<fmt:message key='dt.pag.anterior'/>"
                     }
                 }
             });

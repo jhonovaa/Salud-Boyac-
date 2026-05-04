@@ -131,16 +131,16 @@
             
             <c:choose>
                 <%-- ======================================================= --%>
-                <%-- VISTA ESPECÍFICA PARA EL MÉDICO                         --%>
+                <%-- VISTA ESPECIFICA PARA EL MEDICO                         --%>
                 <%-- ======================================================= --%>
                 <c:when test="${sessionScope.usuario.rol == 'MEDICO'}">
                     
                     <div class="welcome-box-medico mb-5">
                         <div class="row align-items-center">
                             <div class="col-md-9">
-                                <span class="badge bg-white bg-opacity-25 text-white mb-3 px-3 py-2 rounded-pill fw-bold">Panel Profesional</span>
-                                <h1>Bienvenido(a), Dr(a). ${sessionScope.usuario.nombres}</h1>
-                                <p class="lead opacity-75 mb-0">Aquí tienes el resumen de tu agenda médica para el día de hoy.</p>
+                                <span class="badge bg-white bg-opacity-25 text-white mb-3 px-3 py-2 rounded-pill fw-bold"><fmt:message key='dashboard.medico.badge'/></span>
+                                <h1><fmt:message key='dashboard.medico.bienvenida'><fmt:param value="${sessionScope.usuario.nombres}"/></fmt:message></h1>
+                                <p class="lead opacity-75 mb-0"><fmt:message key='dashboard.medico.desc'/></p>
                             </div>
                             <div class="col-md-3 text-end d-none d-md-block">
                                 <i class="fa-solid fa-user-doctor fa-6x opacity-25"></i>
@@ -155,12 +155,12 @@
                                     <div class="stat-icon" style="background: #eef2ff; color: var(--acento-celeste);">
                                         <i class="fa-solid fa-stethoscope"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Mis Citas Hoy</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.medico.citas.hoy'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);">${not empty totalCitasHoy ? totalCitasHoy : '0'}</div>
-                                    <p class="text-muted small">Pacientes agendados hoy</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.medico.citas.hoy.desc'/></p>
                                 </div>
                                 <a href="${pageContext.request.contextPath}/citas" class="btn btn-saludboyaca w-100 mt-4 rounded-3">
-                                    Ver mi agenda <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                                    <fmt:message key='dashboard.medico.btn.agenda'/> <i class="fa-solid fa-chevron-right ms-2 small"></i>
                                 </a>
                             </div>
                         </div>
@@ -171,12 +171,12 @@
                                     <div class="stat-icon" style="background: #fffbeb; color: var(--estado-programada);">
                                         <i class="fa-solid fa-clock"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Mis Pendientes</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.medico.pendientes'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);">${not empty citasPendientes ? citasPendientes : '0'}</div>
-                                    <p class="text-muted small">Citas por atender</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.medico.pendientes.desc'/></p>
                                 </div>
                                 <a href="${pageContext.request.contextPath}/citas" class="btn btn-saludboyaca w-100 mt-4 rounded-3">
-                                    Atender citas <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                                    <fmt:message key='dashboard.medico.btn.atender'/> <i class="fa-solid fa-chevron-right ms-2 small"></i>
                                 </a>
                             </div>
                         </div>
@@ -187,12 +187,12 @@
                                     <div class="stat-icon" style="background: #f0fdf4; color: var(--color-sena);">
                                         <i class="fa-solid fa-calendar-check"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Mi Horario</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.medico.horario'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);"><i class="fa-regular fa-clock"></i></div>
-                                    <p class="text-muted small">Turnos asignados en la semana</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.medico.horario.desc'/></p>
                                 </div>
                                 <a href="${pageContext.request.contextPath}/horarios" class="btn btn-saludboyaca w-100 mt-4 rounded-3">
-                                    Ver mis turnos <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                                    <fmt:message key='dashboard.medico.btn.turnos'/> <i class="fa-solid fa-chevron-right ms-2 small"></i>
                                 </a>
                             </div>
                         </div>
@@ -203,12 +203,12 @@
                                     <div class="stat-icon" style="background: #e0f2fe; color: var(--estado-atendida);">
                                         <i class="fa-solid fa-users-medical"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Mis Pacientes</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.medico.pacientes'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);">${not empty totalPacientes ? totalPacientes : '0'}</div>
-                                    <p class="text-muted small">Pacientes atendidos históricamente</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.medico.pacientes.desc'/></p>
                                 </div>
                                 <a href="${pageContext.request.contextPath}/pacientes" class="btn btn-saludboyaca w-100 mt-4 rounded-3">
-                                    Buscar paciente <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                                    <fmt:message key='dashboard.medico.btn.pacientes'/> <i class="fa-solid fa-chevron-right ms-2 small"></i>
                                 </a>
                             </div>
                         </div>
@@ -223,9 +223,9 @@
                     <div class="welcome-box-enfermero mb-5">
                         <div class="row align-items-center">
                             <div class="col-md-9">
-                                <span class="badge bg-white bg-opacity-25 text-white mb-3 px-3 py-2 rounded-pill fw-bold">Área de Enfermería</span>
-                                <h1>Bienvenido(a), ${sessionScope.usuario.nombres}</h1>
-                                <p class="lead opacity-75 mb-0">Panel de apoyo, triaje y seguimiento de pacientes.</p>
+                                <span class="badge bg-white bg-opacity-25 text-white mb-3 px-3 py-2 rounded-pill fw-bold"><fmt:message key='dashboard.enfermero.badge'/></span>
+                                <h1><fmt:message key='dashboard.enfermero.bienvenida'><fmt:param value="${sessionScope.usuario.nombres}"/></fmt:message></h1>
+                                <p class="lead opacity-75 mb-0"><fmt:message key='dashboard.enfermero.desc'/></p>
                             </div>
                             <div class="col-md-3 text-end d-none d-md-block">
                                 <i class="fa-solid fa-user-nurse fa-6x opacity-25"></i>
@@ -240,9 +240,9 @@
                                     <div class="stat-icon" style="background: #eef2ff; color: var(--acento-celeste);">
                                         <i class="fa-solid fa-calendar-day"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Citas del Día</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.enfermero.citas'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);">${not empty totalCitasHoy ? totalCitasHoy : '0'}</div>
-                                    <p class="text-muted small">Total de citas programadas en el centro médico para hoy</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.enfermero.citas.desc'/></p>
                                 </div>
                             </div>
                         </div>
@@ -253,12 +253,12 @@
                                     <div class="stat-icon" style="background: #f0fdf4; color: var(--color-sena);">
                                         <i class="fa-solid fa-users-medical"></i>
                                     </div>
-                                    <p class="text-muted small fw-bold text-uppercase mb-1">Directorio de Pacientes</p>
+                                    <p class="text-muted small fw-bold text-uppercase mb-1"><fmt:message key='dashboard.enfermero.directorio'/></p>
                                     <div class="h2 fw-bold mb-0" style="color: var(--color-primario);">${not empty totalPacientes ? totalPacientes : '0'}</div>
-                                    <p class="text-muted small">Pacientes registrados para toma de signos vitales e historias</p>
+                                    <p class="text-muted small"><fmt:message key='dashboard.enfermero.directorio.desc'/></p>
                                 </div>
                                 <a href="${pageContext.request.contextPath}/pacientes" class="btn btn-saludboyaca w-100 mt-4 rounded-3">
-                                    Ir al directorio de pacientes <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                                    <fmt:message key='dashboard.enfermero.btn.directorio'/> <i class="fa-solid fa-chevron-right ms-2 small"></i>
                                 </a>
                             </div>
                         </div>
@@ -380,15 +380,15 @@
                                     <c:forEach var="cita" items="${ultimasCitas}">
                                         <tr>
                                             <td class="fw-bold" style="color: var(--texto-normal);">
-                                                Movimiento de Cita: ${cita.pacienteNombre}
+                                                <fmt:message key='dashboard.tabla.movimiento'/> ${cita.pacienteNombre}
                                             </td>
-                                            <td class="text-muted">${cita.fechaCita} a las ${cita.horaCita}</td>
+                                            <td class="text-muted">${cita.fechaCita} <fmt:message key='dashboard.tabla.alas'/> ${cita.horaCita}</td>
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="bg-light rounded-circle p-2 me-2">
                                                         <i class="fa-solid fa-user-doctor text-secondary small"></i>
                                                     </div>
-                                                    <span class="fw-bold small text-muted">Dr(a). ${cita.medicoNombre}</span>
+                                                    <span class="fw-bold small text-muted"><fmt:message key='dashboard.tabla.dr'/> ${cita.medicoNombre}</span>
                                                 </div>
                                             </td>
                                             <td class="text-center">

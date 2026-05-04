@@ -59,7 +59,7 @@
                 width: 100%;
                 max-width: 1000px;
                 height: 650px;
-                background: var(--login-card); /* Azul muy claro solicitado */
+                background: var(--login-card); 
                 border: 1px solid rgba(255, 255, 255, 0.5);
                 border-radius: 40px;
                 overflow: hidden;
@@ -70,7 +70,6 @@
             .left-panel {
                 flex: 1.3;
                 position: relative;
-                /* Imagen de fondo medica */
                 background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
                 display: flex;
                 align-items: center;
@@ -81,7 +80,6 @@
                 content: '';
                 position: absolute;
                 inset: 0;
-                /* Gradiente con color primario y acento celeste */
                 background: linear-gradient(135deg, rgba(26, 82, 118, 0.9) 0%, rgba(46, 134, 193, 0.8) 100%);
                 z-index: 1;
             }
@@ -266,9 +264,9 @@
                 
                 <div class="top-actions">
                     <div class="lang-flags">
-                        <a href="?lang=es" title="Espanol">🇨🇴</a>
-                        <a href="?lang=en" title="English">🇺🇸</a>
-                        <a href="?lang=it" title="Italiano">🇮🇹</a>
+                        <a href="?lang=es" title="<fmt:message key='app.lang.es'/>">🇨🇴</a>
+                        <a href="?lang=en" title="<fmt:message key='app.lang.en'/>">🇺🇸</a>
+                        <a href="?lang=it" title="<fmt:message key='app.lang.it'/>">🇮🇹</a>
                     </div>
                 </div>
 

@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <c:choose>
-            <c:when test="${not empty horario}">Editar Horario</c:when>
-            <c:otherwise>Asignar Horario</c:otherwise>
+            <c:when test="${not empty horario}"><fmt:message key='horario.editar.titulo'/></c:when>
+            <c:otherwise><fmt:message key='horario.asignar.titulo'/></c:otherwise>
         </c:choose>
     </title>
     
@@ -61,15 +61,15 @@
             <h4 class="fw-bold mb-0" style="color: var(--texto-titulos);">
                 <c:choose>
                     <c:when test="${not empty horario}">
-                        <i class="fa-solid fa-pen-to-square me-2"></i>Editar Horario Médico
+                        <i class="fa-solid fa-pen-to-square me-2"></i><fmt:message key='horario.editar.encabezado'/>
                     </c:when>
                     <c:otherwise>
-                        <i class="fa-solid fa-calendar-plus me-2"></i>Asignar Nuevo Horario
+                        <i class="fa-solid fa-calendar-plus me-2"></i><fmt:message key='horario.asignar.encabezado'/>
                     </c:otherwise>
                 </c:choose>
             </h4>
             <a href="${pageContext.request.contextPath}/horarios" class="btn btn-outline-secondary fw-bold rounded-pill px-4">
-                <i class="fa-solid fa-arrow-left me-1"></i> Volver a la Lista
+                <i class="fa-solid fa-arrow-left me-1"></i> <fmt:message key='horario.volver'/>
             </a>
         </header>
 
@@ -87,16 +87,16 @@
                         <!-- Columna Izquierda -->
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);">Médico Asignado</label>
+                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='horario.medico.asignado'/></label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-user-doctor text-muted"></i></span>
                                     <select name="idMedico" class="form-select border-start-0" required>
-                                        <option value="">Seleccione un Médico...</option>
+                                        <option value=""><fmt:message key='horario.seleccione.medico'/></option>
                                         <%-- Este bucle carga solo los usuarios que tengan rol de MEDICO --%>
                                         <c:forEach var="u" items="${usuarios}">
                                             <c:if test="${u.rol == 'MEDICO'}">
                                                 <option value="${u.id}" ${not empty horario && horario.idMedico == u.id ? 'selected' : ''}>
-                                                    Dr/Dra. ${u.nombres} ${u.apellidos}
+                                                    <fmt:message key='horario.dr'/> ${u.nombres} ${u.apellidos}
                                                 </option>
                                             </c:if>
                                         </c:forEach>
@@ -105,18 +105,18 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);">Día de la Semana</label>
+                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='horario.dia.semana'/></label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0"><i class="fa-regular fa-calendar-days text-muted"></i></span>
                                     <select name="diaSemana" class="form-select border-start-0" required>
-                                        <option value="">Seleccione un día...</option>
-                                        <option value="1" ${horario.diaSemana == 1 ? 'selected' : ''}>Lunes</option>
-                                        <option value="2" ${horario.diaSemana == 2 ? 'selected' : ''}>Martes</option>
-                                        <option value="3" ${horario.diaSemana == 3 ? 'selected' : ''}>Miércoles</option>
-                                        <option value="4" ${horario.diaSemana == 4 ? 'selected' : ''}>Jueves</option>
-                                        <option value="5" ${horario.diaSemana == 5 ? 'selected' : ''}>Viernes</option>
-                                        <option value="6" ${horario.diaSemana == 6 ? 'selected' : ''}>Sábado</option>
-                                        <option value="7" ${horario.diaSemana == 7 ? 'selected' : ''}>Domingo</option>
+                                        <option value=""><fmt:message key='horario.seleccione.dia'/></option>
+                                        <option value="1" ${horario.diaSemana == 1 ? 'selected' : ''}><fmt:message key='dia.lunes'/></option>
+                                        <option value="2" ${horario.diaSemana == 2 ? 'selected' : ''}><fmt:message key='dia.martes'/></option>
+                                        <option value="3" ${horario.diaSemana == 3 ? 'selected' : ''}><fmt:message key='dia.miercoles'/></option>
+                                        <option value="4" ${horario.diaSemana == 4 ? 'selected' : ''}><fmt:message key='dia.jueves'/></option>
+                                        <option value="5" ${horario.diaSemana == 5 ? 'selected' : ''}><fmt:message key='dia.viernes'/></option>
+                                        <option value="6" ${horario.diaSemana == 6 ? 'selected' : ''}><fmt:message key='dia.sabado'/></option>
+                                        <option value="7" ${horario.diaSemana == 7 ? 'selected' : ''}><fmt:message key='dia.domingo'/></option>
                                     </select>
                                 </div>
                             </div>
@@ -126,14 +126,14 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-6 mb-4">
-                                    <label class="form-label fw-bold" style="color: var(--texto-normal);">Hora Inicio</label>
+                                    <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='horario.hora.inicio'/></label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0"><i class="fa-regular fa-clock text-success"></i></span>
                                         <input type="time" name="horaInicio" class="form-control border-start-0" value="${not empty horario ? horario.horaInicio : ''}" required>
                                     </div>
                                 </div>
                                 <div class="col-6 mb-4">
-                                    <label class="form-label fw-bold" style="color: var(--texto-normal);">Hora Fin</label>
+                                    <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='horario.hora.fin'/></label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-clock text-danger"></i></span>
                                         <input type="time" name="horaFin" class="form-control border-start-0" value="${not empty horario ? horario.horaFin : ''}" required>
@@ -142,7 +142,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label fw-bold" style="color: var(--texto-normal);">Límite Máximo de Citas</label>
+                                <label class="form-label fw-bold" style="color: var(--texto-normal);"><fmt:message key='horario.max.citas.label'/></label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-users text-muted"></i></span>
                                     <input type="number" name="maxCitas" class="form-control border-start-0" min="1" max="50" value="${not empty horario ? horario.maxCitas : '10'}" required>
@@ -155,10 +155,10 @@
 
                     <div class="text-end">
                         <a href="${pageContext.request.contextPath}/horarios" class="btn btn-secondary px-4 py-2 fw-bold" style="border-radius: 12px;">
-                            Cancelar
+                            <fmt:message key='horario.cancelar'/>
                         </a>
                         <button type="submit" class="btn btn-saludboyaca ms-2 px-4 py-2 fw-bold" style="border-radius: 12px;">
-                            <i class="fa-solid fa-save me-2"></i>Guardar Horario
+                            <i class="fa-solid fa-save me-2"></i><fmt:message key='horario.guardar'/>
                         </button>
                     </div>
                 </form>

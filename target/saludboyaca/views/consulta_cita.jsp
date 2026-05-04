@@ -17,7 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     
     <style>
-        /* PALETA OFICIAL SALUDBOYACÁ */
+        /* PALETA OFICIAL SALUDBOYACA */
         :root {
             --color-primario: #1A5276;    
             --color-secundario: #39A900;  
@@ -198,11 +198,11 @@
     <nav class="navbar navbar-expand-lg navbar-apple sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4" href="${pageContext.request.contextPath}/" style="color: var(--color-primario);">
-                <i class="bi bi-heart-pulse-fill me-2"></i>SaludBoyacá
+                <i class="bi bi-heart-pulse-fill me-2"></i>SaludBoyaca
             </a>
 
             <div class="d-flex align-items-center order-lg-last ms-3">
-                <a class="btn btn-saludboyaca btn-apple px-4 py-2 d-none d-md-block shadow-sm" style="width: auto;" href="${pageContext.request.contextPath}/login">Intranet</a>
+                <a class="btn btn-saludboyaca btn-apple px-4 py-2 d-none d-md-block shadow-sm" style="width: auto;" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
                 <button class="navbar-toggler ms-2 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon" style="color: var(--color-primario);"><i class="bi bi-grid-fill fs-3"></i></span>
                 </button>
@@ -210,14 +210,14 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto fw-medium align-items-center">
-                    <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/"><fmt:message key='index.nav.inicio'/></a></li>
                     <li class="nav-item d-flex gap-2 px-4 py-2">
                         <a href="?lang=es" class="text-decoration-none fw-bold" style="color: var(--texto-normal);">ES</a>
                         <span style="color: var(--texto-suave);">|</span>
                         <a href="?lang=en" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">EN</a>
                     </li>
                     <li class="nav-item d-md-none mt-3 w-100">
-                        <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login">Intranet</a>
+                        <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
                     </li>
                 </ul>
             </div>
@@ -241,12 +241,12 @@
             <!-- MANEJO DE ERRORES -->
             <c:if test="${not empty error}">
                 <div class="alert alert-danger alert-dismissible fade show text-center rounded-4 shadow-sm border-0 mb-4" style="background-color: #FADBD8; color: #922B21;" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i> <strong>¡Ups!</strong> ${error}
+                    <i class="fas fa-exclamation-circle me-2"></i> <strong><fmt:message key='consulta.alerta.ups'/></strong> ${error}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
 
-            <!-- FORMULARIO DE BÚSQUEDA -->
+            <!-- FORMULARIO DE BUSQUEDA -->
             <form action="${pageContext.request.contextPath}/consulta-cita" method="POST">
                 
                 <!-- Input del Documento (Alineado a la izquierda para mejor lectura) -->
@@ -263,13 +263,13 @@
                     <label class="form-label d-block fw-bold mb-4" style="color: var(--texto-titulos);"><fmt:message key='consulta.captcha'/></label>
                     
                     <div class="mb-4 d-flex justify-content-center">
-                        <!-- IMAGEN DEL CAPTCHA (Con más espacio y resalte) -->
+                        <!-- IMAGEN DEL CAPTCHA (Con mas espacio y resalte) -->
                         <div class="bg-white p-2 border rounded-4 shadow-sm d-inline-block">
                             <img src="${captchaImage}" alt="<fmt:message key='consulta.captcha'/>" style="height: 60px; object-fit: contain;">
                         </div>
                     </div>
                     
-                    <!-- Input del CAPTCHA (Ya no está limitado a 300px, ocupa todo el ancho disponible) -->
+                    <!-- Input del CAPTCHA (Ya no esta limitado a 300px, ocupa todo el ancho disponible) -->
                     <div class="input-group input-group-lg shadow-sm rounded-4 overflow-hidden w-100">
                         <span class="input-group-text border-end-0"><i class="fas fa-shield-alt" style="color: var(--color-secundario);"></i></span>
                         <input type="text" name="captcha" class="form-control border-start-0 text-center fw-bold text-uppercase" placeholder="<fmt:message key='consulta.captcha.placeholder'/>" required autocomplete="off" style="letter-spacing: 2px;">

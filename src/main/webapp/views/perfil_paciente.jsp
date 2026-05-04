@@ -18,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     
     <style>
-        /* PALETA OFICIAL SALUDBOYACÁ */
+        /* PALETA OFICIAL SALUDBOYACA */
         :root {
             --color-primario: #1A5276;    
             --color-secundario: #39A900;  
@@ -108,7 +108,7 @@
             border-bottom: none;
         }
 
-        /* TÍTULOS DE SECCIÓN */
+        /* TITULOS DE SECCION */
         .section-title {
             color: var(--acento-celeste);
             font-weight: 700;
@@ -172,7 +172,7 @@
             color: var(--texto-normal);
         }
 
-        /* Utilidad para botones en la barra de navegación */
+        /* Utilidad para botones en la barra de navegacion */
         .btn-saludboyaca {
             background-color: var(--color-primario);
             color: white;
@@ -213,7 +213,7 @@
             </a>
 
             <div class="d-flex align-items-center order-lg-last ms-3">
-                <a class="btn btn-saludboyaca btn-apple px-4 py-2 d-none d-md-block shadow-sm" style="width: auto;" href="${pageContext.request.contextPath}/login">Intranet</a>
+                <a class="btn btn-saludboyaca btn-apple px-4 py-2 d-none d-md-block shadow-sm" style="width: auto;" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
                 <button class="navbar-toggler ms-2 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon" style="color: var(--color-primario);"><i class="bi bi-grid-fill fs-3"></i></span>
                 </button>
@@ -221,14 +221,16 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto fw-medium align-items-center">
-                    <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/"><fmt:message key='index.nav.inicio'/></a></li>
                     <li class="nav-item d-flex gap-2 px-4 py-2">
                         <a href="?lang=es" class="text-decoration-none fw-bold" style="color: var(--texto-normal);">ES</a>
                         <span style="color: var(--texto-suave);">|</span>
                         <a href="?lang=en" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">EN</a>
+                        <span style="color: var(--texto-suave);">|</span>
+                        <a href="?lang=it" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">IT</a>
                     </li>
                     <li class="nav-item d-md-none mt-3 w-100">
-                        <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login">Intranet</a>
+                        <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
                     </li>
                 </ul>
             </div>
@@ -250,7 +252,7 @@
             <!-- CUERPO DE DATOS -->
             <div class="p-4 p-md-5">
                 
-                <!-- SECCIÓN 1: Identificación -->
+                <!-- SECCION 1: Identificacion -->
                 <div class="mb-4">
                     <h5 class="section-title"><i class="fas fa-id-card"></i> <fmt:message key="paciente.identificacion" /></h5>
                     <div class="row">
@@ -265,7 +267,7 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN 2: Contacto -->
+                <!-- SECCION 2: Contacto -->
                 <div class="mb-4">
                     <h5 class="section-title"><i class="fas fa-map-marker-alt"></i> <fmt:message key="paciente.contacto" /></h5>
                     <div class="row">
@@ -275,12 +277,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="data-label"><fmt:message key="paciente.correo" /></div>
-                            <div class="data-value">${not empty paciente.email ? paciente.email : 'No registrado'}</div>
+                            <div class="data-value">
+                                <c:choose>
+                                    <c:when test="${not empty paciente.email}">${paciente.email}</c:when>
+                                    <c:otherwise><span class="text-muted fst-italic"><fmt:message key="paciente.sin.registro" /></span></c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SECCIÓN 3: Datos Médicos -->
+                <!-- SECCION 3: Datos Medicos -->
                 <div class="mb-4">
                     <h5 class="section-title"><i class="fas fa-hospital-user"></i> <fmt:message key="paciente.datos.medicos" /></h5>
                     <div class="row">
@@ -300,15 +307,15 @@
                     </div>
                 </div>
 
-                <!-- BOTONES DE ACCIÓN -->
+                <!-- BOTONES DE ACCION -->
                 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-5 pt-4 gap-3" style="border-top: 1px solid rgba(0,0,0,0.08);">
                     
-                    <!-- Botón Cancelar (Volver) -->
+                    <!-- Boton Cancelar (Volver) -->
                     <a href="${pageContext.request.contextPath}/consulta-cita" class="btn btn-outline-cancel btn-apple w-100 w-sm-auto text-center">
                         <i class="fas fa-arrow-left me-2"></i> <fmt:message key="paciente.cancelar" />
                     </a>
                     
-                    <!-- Botón Generar PDF -->
+                    <!-- Boton Generar PDF -->
                     <form action="${pageContext.request.contextPath}/generar-pdf" method="get" class="m-0 w-100 w-sm-auto">
                         <input type="hidden" name="documento" value="${paciente.documento}">
                         <button type="submit" class="btn btn-sena btn-apple shadow-sm w-100">

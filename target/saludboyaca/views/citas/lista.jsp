@@ -5,6 +5,9 @@
 <fmt:setLocale value="${sessionScope.lang == null ? 'es' : sessionScope.lang}" />
 <fmt:setBundle basename="messages"/>
 
+<%-- Guardamos el mensaje conflictivo en una variable para evitar errores de comillas en el JS --%>
+<fmt:message key='cita.confirmar.cancelar.medico' var="msgConfirmMedico" />
+
 <!DOCTYPE html>
 <html lang="${sessionScope.lang}">
 <head>
@@ -97,7 +100,7 @@
 
             <c:if test="${param.mensaje == 'estado_actualizado'}">
                 <div class="alert alert-info alert-dismissible fade show border-0 shadow-sm" style="border-radius: 15px;">
-                    <i class="fa-solid fa-arrows-rotate me-2"></i>El estado de la cita ha sido actualizado correctamente.
+                    <i class="fa-solid fa-arrows-rotate me-2"></i><fmt:message key='cita.alerta.actualizado'/>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
@@ -121,7 +124,7 @@
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-secondary w-100 fw-bold">
-                            <i class="fa-solid fa-filter me-2"></i>Buscar
+                            <i class="fa-solid fa-filter me-2"></i><fmt:message key='cita.btn.buscar'/>
                         </button>
                     </div>
                 </form>
@@ -138,7 +141,7 @@
                                 <th><fmt:message key='cita.medico'/></th>
                                 <th><fmt:message key='cita.especialidad'/></th>
                                 <th class="text-center"><fmt:message key='cita.estado'/></th>
-                                <th class="text-center">Acciones</th>
+                                <th class="text-center"><fmt:message key='cita.acciones'/></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +151,7 @@
                                     <td>${c.horaCita}</td>
                                     <td>
                                         <strong>${c.pacienteNombre}</strong><br>
-                                        <small class="text-muted">CC: ${c.pacienteDocumento}</small>
+                                        <small class="text-muted"><fmt:message key='cita.cc'/>: ${c.pacienteDocumento}</small>
                                     </td>
                                     <td>${c.medicoNombre}</td>
                                     <td><span class="badge bg-light text-dark border">${c.especialidadNombre}</span></td>
@@ -171,8 +174,8 @@
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm shadow-sm">
                                             
-                                            <!-- Botón de detalle Modal -->
-                                            <button type="button" class="btn btn-outline-info" title="Ver Detalle" data-bs-toggle="modal" data-bs-target="#modalDetalle${c.id}" style="border-radius: 4px 0 0 4px;">
+                                            <!-- Boton de detalle Modal -->
+                                            <button type="button" class="btn btn-outline-info" title="<fmt:message key='cita.ver.detalle'/>" data-bs-toggle="modal" data-bs-target="#modalDetalle${c.id}" style="border-radius: 4px 0 0 4px;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
 
@@ -186,38 +189,38 @@
                                                     </a>
                                                 </c:if>
 
-                                                <!-- Botón de Reprogramar (SOLO para Recepcionista) -->
+                                                <!-- Boton de Reprogramar (SOLO para Recepcionista) -->
                                                 <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
-                                                    <a href="${pageContext.request.contextPath}/citas?accion=editar&id=${c.id}" class="btn btn-outline-warning" title="Reprogramar" style="border-radius: 0;">
+                                                    <a href="${pageContext.request.contextPath}/citas?accion=editar&id=${c.id}" class="btn btn-outline-warning" title="<fmt:message key='cita.reprogramar'/>" style="border-radius: 0;">
                                                         <i class="fa-solid fa-calendar-day"></i>
                                                     </a>
                                                 </c:if>
                                                 
-                                                <!-- BOTÓN ACTIVAR CITA (SOLO RECEPCIONISTA cuando está PROGRAMADA) -->
+                                                <!-- BOTON ACTIVAR CITA (SOLO RECEPCIONISTA cuando esta PROGRAMADA) -->
                                                 <c:if test="${sessionScope.usuario.rol == 'RECEPCIONISTA' && c.estado == 'PROGRAMADA'}">
                                                     <form action="${pageContext.request.contextPath}/citas" method="POST" class="d-inline m-0 p-0">
                                                         <input type="hidden" name="accion" value="cambiarEstado">
                                                         <input type="hidden" name="id" value="${c.id}">
                                                         <input type="hidden" name="estado" value="CONFIRMADA">
-                                                        <button type="submit" class="btn btn-outline-success" title="Activar Cita (Anunciar al Médico)" style="border-radius: 0;">
+                                                        <button type="submit" class="btn btn-outline-success" title="<fmt:message key='cita.activar'/>" style="border-radius: 0;">
                                                             <i class="fa-solid fa-volume-high"></i>
                                                         </button>
                                                     </form>
                                                 </c:if>
 
-                                                <!-- BOTÓN ATENDER CITA (SOLO MÉDICO cuando ya fue activada/CONFIRMADA) -->
+                                                <!-- BOTON ATENDER CITA (SOLO MEDICO cuando ya fue activada/CONFIRMADA) -->
                                                 <c:if test="${sessionScope.usuario.rol == 'MEDICO' && c.estado == 'CONFIRMADA'}">
                                                     <form action="${pageContext.request.contextPath}/citas" method="POST" class="d-inline m-0 p-0">
                                                         <input type="hidden" name="accion" value="cambiarEstado">
                                                         <input type="hidden" name="id" value="${c.id}">
                                                         <input type="hidden" name="estado" value="ATENDIDA">
-                                                        <button type="submit" class="btn btn-outline-primary" title="Marcar como Atendida" style="border-radius: 0; border-color: var(--acento-celeste); color: var(--acento-celeste);">
+                                                        <button type="submit" class="btn btn-outline-primary" title="<fmt:message key='cita.marcar.atendida'/>" style="border-radius: 0; border-color: var(--acento-celeste); color: var(--acento-celeste);">
                                                             <i class="fa-solid fa-stethoscope"></i>
                                                         </button>
                                                     </form>
                                                 </c:if>
 
-                                                <!-- BOTÓN CANCELAR (Lógica mixta) -->
+                                                <!-- BOTON CANCELAR (Logica mixta) -->
                                                 <c:if test="${c.estado != 'CANCELADA' && c.estado != 'ATENDIDA'}">
                                                     <form action="${pageContext.request.contextPath}/citas" method="POST" class="d-inline m-0 p-0">
                                                         <input type="hidden" name="accion" value="cambiarEstado">
@@ -226,14 +229,13 @@
                                                         
                                                         <c:choose>
                                                             <c:when test="${sessionScope.usuario.rol == 'MEDICO'}">
-                                                                <!-- Médico cancela sin preguntar tiempo -->
-                                                                <button type="submit" class="btn btn-outline-danger" title="Cancelar Cita" style="border-radius: 0 4px 4px 0;" onclick="return confirm('¿Doctor, está seguro de cancelar esta cita?');">
+                                                                <!-- Usamos la variable msgConfirmMedico definida al inicio del archivo -->
+                                                                <button type="submit" class="btn btn-outline-danger" title="<fmt:message key='cita.cancelar'/>" style="border-radius: 0 4px 4px 0;" onclick="return confirm('${msgConfirmMedico}');">
                                                                     <i class="fa-solid fa-ban"></i>
                                                                 </button>
                                                             </c:when>
                                                             <c:when test="${sessionScope.usuario.rol == 'RECEPCIONISTA'}">
-                                                                <!-- Recepcionista cancela validando los 10 minutos con JS -->
-                                                                <button type="button" class="btn btn-outline-danger btn-cancelar-recepcionista" title="Cancelar por Inasistencia" data-fecha="${c.fechaCita}" data-hora="${c.horaCita}" style="border-radius: 0 4px 4px 0;">
+                                                                <button type="button" class="btn btn-outline-danger btn-cancelar-recepcionista" title="<fmt:message key='cita.cancelar.inasistencia'/>" data-fecha="${c.fechaCita}" data-hora="${c.horaCita}" style="border-radius: 0 4px 4px 0;">
                                                                     <i class="fa-solid fa-user-xmark"></i>
                                                                 </button>
                                                             </c:when>
@@ -252,8 +254,8 @@
                                         <div class="modal-content border-0" style="border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
                                             
                                             <div class="modal-header border-0 pb-0 pt-4 px-4 position-relative justify-content-center">
-                                                <h5 class="modal-title fw-bold" style="color: var(--texto-titulos);">Detalle de la Cita</h5>
-                                                <button type="button" class="btn-close position-absolute end-0 me-4 bg-light rounded-circle p-2 shadow-sm" data-bs-dismiss="modal" aria-label="Cerrar" style="font-size: 0.7rem;"></button>
+                                                <h5 class="modal-title fw-bold" style="color: var(--texto-titulos);"><fmt:message key='cita.detalle.titulo'/></h5>
+                                                <button type="button" class="btn-close position-absolute end-0 me-4 bg-light rounded-circle p-2 shadow-sm" data-bs-dismiss="modal" aria-label="<fmt:message key='cita.btn.cerrar'/>" style="font-size: 0.7rem;"></button>
                                             </div>
 
                                             <div class="modal-body p-4">
@@ -264,12 +266,12 @@
                                                             <i class="fa-regular fa-calendar-days fs-5"></i>
                                                         </div>
                                                         <div>
-                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;">Fecha</small>
+                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;"><fmt:message key='cita.fecha'/></small>
                                                             <span class="fs-5 fw-bold text-dark">${c.fechaCita}</span>
                                                         </div>
                                                     </div>
                                                     <div class="text-end border-start ps-3 border-secondary border-opacity-10">
-                                                        <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;">Hora</small>
+                                                        <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;"><fmt:message key='cita.hora'/></small>
                                                         <span class="fs-5 fw-bold text-dark">${c.horaCita}</span>
                                                     </div>
                                                 </div>
@@ -281,9 +283,9 @@
                                                             <i class="fa-solid fa-user"></i>
                                                         </div>
                                                         <div>
-                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;">Paciente</small>
+                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;"><fmt:message key='cita.paciente'/></small>
                                                             <div class="fw-bold text-dark fs-6">${c.pacienteNombre}</div>
-                                                            <div class="text-muted small" style="font-size: 0.8rem;">CC: ${c.pacienteDocumento}</div>
+                                                            <div class="text-muted small" style="font-size: 0.8rem;"><fmt:message key='cita.cc'/>: ${c.pacienteDocumento}</div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex align-items-center">
@@ -291,7 +293,7 @@
                                                             <i class="fa-solid fa-user-doctor"></i>
                                                         </div>
                                                         <div>
-                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;">Médico Tratante</small>
+                                                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem;"><fmt:message key='cita.medico.tratante'/></small>
                                                             <div class="fw-bold text-dark fs-6">${c.medicoNombre}</div>
                                                             <div class="badge bg-white text-dark border mt-1 fw-medium">${c.especialidadNombre}</div>
                                                         </div>
@@ -300,13 +302,18 @@
 
                                                 <!-- Motivo -->
                                                 <div class="mb-4 p-3 shadow-sm" style="background-color: #f5f5f7; border-radius: 16px;">
-                                                    <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.7rem;"><i class="fa-solid fa-comment-medical me-1"></i> Motivo de Consulta</small>
-                                                    <p class="mb-0 text-dark" style="font-size: 0.95rem; line-height: 1.5;">${empty c.motivo ? 'Sin motivo registrado.' : c.motivo}</p>
+                                                    <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.7rem;"><i class="fa-solid fa-comment-medical me-1"></i> <fmt:message key='cita.motivo'/></small>
+                                                    <p class="mb-0 text-dark" style="font-size: 0.95rem; line-height: 1.5;">
+                                                        <c:choose>
+                                                            <c:when test="${empty c.motivo}"><fmt:message key='cita.sin.motivo'/></c:when>
+                                                            <c:otherwise>${c.motivo}</c:otherwise>
+                                                        </c:choose>
+                                                    </p>
                                                 </div>
 
                                                 <!-- Estado -->
                                                 <div class="text-center p-3 shadow-sm" style="background-color: #f5f5f7; border-radius: 16px;">
-                                                    <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.7rem;">Estado Actual</small>
+                                                    <small class="text-muted fw-bold text-uppercase d-block mb-2" style="font-size: 0.7rem;"><fmt:message key='cita.estado.actual'/></small>
                                                     <c:choose>
                                                         <c:when test="${c.estado == 'PROGRAMADA'}">
                                                             <span class="badge fs-6 px-4 py-2 rounded-pill shadow-sm" style="background-color: var(--estado-programada); color: white;"><fmt:message key='cita.estado.programada'/></span>
@@ -324,7 +331,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer border-0 pt-0 pb-4 px-4 justify-content-center">
-                                                <button type="button" class="btn btn-secondary fw-bold rounded-pill w-100 py-2 shadow-sm" data-bs-dismiss="modal" style="background-color: #e5e5ea; color: #1c1c1e; border: none; font-size: 1.05rem;">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary fw-bold rounded-pill w-100 py-2 shadow-sm" data-bs-dismiss="modal" style="background-color: #e5e5ea; color: #1c1c1e; border: none; font-size: 1.05rem;"><fmt:message key='cita.btn.cerrar'/></button>
                                             </div>
                                         </div>
                                     </div>
@@ -354,38 +361,45 @@
                 "ordering": true,
                 "responsive": true,
                 "language": {
-                    "sEmptyTable":     "No hay datos disponibles",
-                    "sInfo":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-                    "sInfoEmpty":      "Mostrando 0 a 0 de 0 entradas",
-                    "sInfoFiltered":   "(filtrado)",
-                    "sLengthMenu":     "Mostrar _MENU_ entradas",
-                    "sSearch":         "Buscar:",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }
+                    "sEmptyTable":     "<fmt:message key='dt.vacio'/>",
+                    "sInfo":           "<fmt:message key='dt.info'/>",
+                    "sInfoEmpty":      "<fmt:message key='dt.info.vacio'/>",
+                    "sInfoFiltered":   "<fmt:message key='dt.info.filtro'/>",
+                    "sLengthMenu":     "<fmt:message key='dt.menu'/>",
+                    "sLoadingRecords": "<fmt:message key='dt.cargando'/>",
+                    "sProcessing":     "<fmt:message key='dt.procesando'/>",
+                    "sSearch":         "<fmt:message key='dt.buscar'/>",
+                    "sZeroRecords":    "<fmt:message key='dt.cero'/>",
+                    "oPaginate": {
+                        "sFirst":    "<fmt:message key='dt.pag.primero'/>",
+                        "sLast":     "<fmt:message key='dt.pag.ultimo'/>",
+                        "sNext":     "<fmt:message key='dt.pag.siguiente'/>",
+                        "sPrevious": "<fmt:message key='dt.pag.anterior'/>"
+                    }
                 }
             });
 
-            // LÓGICA DE LOS 10 MINUTOS DE GRACIA PARA LA RECEPCIONISTA
+            // LOGICA DE LOS 10 MINUTOS DE GRACIA PARA LA RECEPCIONISTA
+            // Inyectamos las traducciones en variables JS
+            const msgGraciaAlto = "<fmt:message key='cita.js.gracia.alto'/>";
+            const msgGraciaConfirmar = "<fmt:message key='cita.js.gracia.confirmar'/>";
+
             $(document).on('click', '.btn-cancelar-recepcionista', function(e) {
-                e.preventDefault(); // Evitamos que el formulario se envíe de inmediato
+                e.preventDefault(); 
                 
-                let fechaStr = $(this).data('fecha'); // Ejemplo: 2026-04-27
-                let horaStr = $(this).data('hora');   // Ejemplo: 09:00:00
+                let fechaStr = $(this).data('fecha'); 
+                let horaStr = $(this).data('hora');   
                 
-                // Unimos fecha y hora para crear el objeto de tiempo de la cita
                 let citaDate = new Date(fechaStr + 'T' + horaStr);
                 let ahora = new Date();
                 
-                // Calculamos la diferencia en minutos
                 let diffMs = ahora - citaDate;
                 let diffMins = Math.floor(diffMs / 60000);
                 
-                // Si la cita es en el futuro, o no han pasado 10 minutos
                 if (diffMins < 10) {
-                    alert('¡Alto ahí! El paciente aún está en su tiempo de gracia.\n\nDebes esperar a que pasen 10 minutos desde la hora programada de la cita para poder cancelarla por inasistencia.');
+                    alert(msgGraciaAlto);
                 } else {
-                    // Si ya pasaron los 10 minutos, pedimos confirmación y enviamos el formulario
-                    if(confirm('El paciente tiene más de 10 minutos de retraso.\n\n¿Confirmas cancelar la cita por inasistencia?')) {
+                    if(confirm(msgGraciaConfirmar)) {
                         $(this).closest('form').submit();
                     }
                 }
