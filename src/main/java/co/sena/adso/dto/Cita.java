@@ -22,6 +22,9 @@ public class Cita {
     private String medicoNombre;
     private String especialidadNombre;
 
+    public Cita() {
+    }
+
     // Getters y Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

@@ -1,6 +1,7 @@
 package co.sena.adso.dto;
 
 import java.sql.Date;
+import java.util.List; 
 
 public class Paciente {
     private int id;
@@ -12,6 +13,12 @@ public class Paciente {
     private String email;
     private String eps;
     private String veredaBarrio;
+    
+    // Este campo permite almacenar la informacion de las citas del paciente
+    private List<Cita> citas; 
+
+    public Paciente() {
+    }
 
     // Getters y Setters
     public int getId() { return id; }
@@ -40,4 +47,13 @@ public class Paciente {
 
     public String getVeredaBarrio() { return veredaBarrio; }
     public void setVeredaBarrio(String veredaBarrio) { this.veredaBarrio = veredaBarrio; }
+
+    // Metodos para gestionar el historial de citas
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
 }

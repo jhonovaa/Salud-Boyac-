@@ -10,15 +10,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><fmt:message key="app.nombre"/> - <fmt:message key="paciente.titulo"/></title>
+    <title><fmt:message key="app.nombre"/> - <fmt:message key="perfil.titulo.pestana"/></title>
     
-    <%-- Bootstrap 5.3.8 --%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <%-- Bootstrap 5.3.3 --%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     
     <style>
-        /* PALETA OFICIAL SALUDBOYACA */
         :root {
             --color-primario: #1A5276;    
             --color-secundario: #39A900;  
@@ -27,15 +26,13 @@
             --texto-titulos: #154360;     
             --texto-normal: #2C3E50;      
             --texto-suave: #7F8C8D;       
-            
-            --nav-bg: rgba(255, 255, 255, 0.65);
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.9);
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
             background-color: var(--fondo-body);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: var(--texto-normal);
             min-height: 100vh;
             display: flex;
@@ -63,9 +60,9 @@
             100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* NAVBAR ESTILO APPLE (Glassmorphism) */
+        /* NAVBAR ESTILO APPLE */
         .navbar-apple {
-            background: var(--nav-bg) !important;
+            background: rgba(255, 255, 255, 0.65) !important;
             backdrop-filter: blur(25px) saturate(200%);
             -webkit-backdrop-filter: blur(25px) saturate(200%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.8);
@@ -73,269 +70,335 @@
             box-shadow: 0 4px 30px rgba(0,0,0,0.03);
             z-index: 1000;
         }
-        .nav-link {
-            color: var(--texto-normal) !important;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-        .nav-link:hover {
-            color: var(--color-primario) !important;
-            transform: translateY(-1px);
-        }
 
-        /* TARJETA DE CRISTAL (GLASSMORPHISM) */
         .apple-card {
             background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 20px 40px rgba(26, 82, 118, 0.08);
-            overflow: hidden; /* Para que el header azul respete los bordes */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(26, 82, 118, 0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
             transition: var(--transition);
         }
+
         .apple-card:hover {
-            box-shadow: 0 25px 50px rgba(26, 82, 118, 0.12);
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(26, 82, 118, 0.12);
         }
 
-        /* HEADER AZUL DE LA TARJETA */
         .card-header-blue {
             background-color: var(--color-primario);
             color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
-            border-bottom: none;
+            padding: 1.5rem;
+            border-bottom: 4px solid var(--color-secundario);
         }
 
-        /* TITULOS DE SECCION */
         .section-title {
             color: var(--acento-celeste);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             border-left: 4px solid var(--acento-celeste);
             padding-left: 12px;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* ETIQUETAS Y DATOS */
         .data-label {
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
             font-weight: 700;
             color: var(--texto-suave);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
         }
+
         .data-value {
             font-size: 1.1rem;
             font-weight: 500;
-            color: var(--texto-normal);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* BOTONES ESTILO APPLE */
-        .btn-apple {
-            border-radius: 50px;
-            padding: 0.7rem 1.8rem;
-            font-weight: 600;
-            transition: 0.3s;
-            letter-spacing: 0.3px;
-        }
-        .btn-apple:active {
-            transform: scale(0.96);
-        }
-        
-        .btn-sena {
-            background-color: var(--color-secundario);
-            color: white;
-            border: none;
-        }
-        .btn-sena:hover {
-            background-color: #2b8000;
-            color: white;
-            box-shadow: 0 8px 20px rgba(57, 169, 0, 0.25);
-        }
-
-        .btn-outline-cancel {
-            background-color: transparent;
-            color: var(--texto-suave);
-            border: 1px solid rgba(0,0,0,0.15);
-        }
-        .btn-outline-cancel:hover {
-            background-color: rgba(0,0,0,0.05);
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding-bottom: 0.6rem;
             color: var(--texto-normal);
         }
 
-        /* Utilidad para botones en la barra de navegacion */
-        .btn-saludboyaca {
+        .db-table {
+            border-radius: 1rem;
+            overflow: hidden;
+            font-size: 0.95rem;
+            background: white;
+        }
+
+        .db-table thead th {
             background-color: var(--color-primario);
             color: white;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border-radius: 50px; 
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            padding: 1rem;
             border: none;
         }
-        .btn-saludboyaca:hover {
-            background-color: #154360;
-            color: white;
-            box-shadow: 0 5px 15px rgba(26, 82, 118, 0.2);
+
+        .db-table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        @media (max-width: 991px) {
-            .navbar-collapse {
-                background: var(--nav-bg);
-                backdrop-filter: blur(25px);
-                padding: 25px;
-                border-radius: 25px;
-                margin-top: 15px;
-                border: 1px solid rgba(255,255,255,0.8);
-            }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
         }
+
+        .bg-atendida { background-color: #d1e7dd; color: #0f5132; }
+        .bg-cancelada { background-color: #f8d7da; color: #842029; }
+        .bg-confirmada { background-color: #cfe2ff; color: #084298; }
+        .bg-programada { background-color: #fff3cd; color: #664d03; }
+
+        .btn-apple { 
+            border-radius: 50px; 
+            padding: 0.6rem 1.5rem; 
+            font-weight: 600; 
+            transition: 0.3s; 
+        }
+        
+        .btn-sena { background-color: var(--color-secundario); color: white; border: none; }
+        .btn-sena:hover { background-color: #2b8000; color: white; box-shadow: 0 8px 20px rgba(57, 169, 0, 0.25); transform: translateY(-2px); }
+        
+        .btn-saludboyaca { background-color: var(--color-primario); color: white; border: none; border-radius: 50px; font-weight: 600;}
+        .btn-saludboyaca:hover { background-color: #123a54; color: white; box-shadow: 0 8px 20px rgba(26, 82, 118, 0.25); }
     </style>
 </head>
 <body>
 
-    <!-- BURBUJAS DE CRISTAL -->
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
 
-    <!-- NAVBAR IDENTICA AL INDEX Y CONSULTA -->
     <nav class="navbar navbar-expand-lg navbar-apple sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4" href="${pageContext.request.contextPath}/" style="color: var(--color-primario);">
                 <i class="bi bi-heart-pulse-fill me-2"></i><fmt:message key="app.nombre"/>
             </a>
-
-            <div class="d-flex align-items-center order-lg-last ms-3">
-                <a class="btn btn-saludboyaca btn-apple px-4 py-2 d-none d-md-block shadow-sm" style="width: auto;" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
-                <button class="navbar-toggler ms-2 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon" style="color: var(--color-primario);"><i class="bi bi-grid-fill fs-3"></i></span>
-                </button>
-            </div>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto fw-medium align-items-center">
-                    <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/"><fmt:message key='index.nav.inicio'/></a></li>
-                    <li class="nav-item d-flex gap-2 px-4 py-2">
-                        <a href="?lang=es" class="text-decoration-none fw-bold" style="color: var(--texto-normal);">ES</a>
-                        <span style="color: var(--texto-suave);">|</span>
-                        <a href="?lang=en" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">EN</a>
-                        <span style="color: var(--texto-suave);">|</span>
-                        <a href="?lang=it" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">IT</a>
-                    </li>
-                    <li class="nav-item d-md-none mt-3 w-100">
-                        <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
-                    </li>
-                </ul>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto fw-medium align-items-center">
+                        <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/"><fmt:message key='index.nav.inicio'/></a></li>
+                        <li class="nav-item d-flex gap-2 px-4 py-2">
+                            <a href="?lang=es" class="text-decoration-none fw-bold" style="color: var(--texto-normal);">ES</a>
+                            <span style="color: var(--texto-suave);">|</span>
+                            <a href="?lang=en" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">EN</a>
+                            <span style="color: var(--texto-suave);">|</span>
+                            <a href="?lang=it" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">IT</a>
+                        </li>
+                        <li class="nav-item d-md-none mt-3 w-100">
+                            <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn btn-saludboyaca px-4 py-2 shadow-sm d-none d-md-block ms-3" href="${pageContext.request.contextPath}/login"><fmt:message key="index.nav.intranet"/></a>
             </div>
         </div>
     </nav>
-    
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div class="container py-5 d-flex justify-content-center align-items-center" style="flex: 1; z-index: 1;">
+
+    <div class="container py-5" style="flex: 1; z-index: 1;">
         
-        <div class="apple-card" style="max-width: 750px; width: 100%;">
-            
-            <!-- ENCABEZADO AZUL -->
-            <div class="card-header-blue">
-                <i class="fas fa-circle-user fa-4x mb-3 opacity-75"></i>
-                <h2 class="fw-bold mb-1"><fmt:message key="paciente.titulo" /></h2>
-                <p class="mb-0 fs-5 opacity-75">${not empty paciente ? paciente.nombres : ''} ${not empty paciente ? paciente.apellidos : ''}</p>
+        <%-- EXTRAEMOS LA CITA MAS RECIENTE DEL HISTORIAL DE FORMA AUTOMATICA --%>
+        <c:set var="citaActual" value="${not empty historial ? historial[0] : null}" />
+
+        <div class="row g-4 mb-4">
+            <%-- Tarjeta 1: Informacion del Paciente --%>
+            <div class="col-lg-4">
+                <div class="apple-card h-100">
+                    <div class="card-header-blue text-center py-4">
+                        <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 90px; height: 90px;">
+                            <i class="bi bi-person-fill fs-1" style="color: var(--color-primario);"></i>
+                        </div>
+                        <h4 class="mb-1 fw-bold">
+                            <c:choose>
+                                <c:when test="${not empty paciente.nombres}">
+                                    ${paciente.nombres} ${paciente.apellidos}
+                                </c:when>
+                                <c:otherwise><fmt:message key="perfil.nombre.nodisponible"/></c:otherwise>
+                            </c:choose>
+                        </h4>
+                        <span class="badge bg-light text-dark px-3 py-2 rounded-pill shadow-sm mt-2 fw-bold">
+                            <i class="bi bi-upc-scan me-1"></i> <fmt:message key="cita.cc"/>: ${not empty paciente.documento ? paciente.documento : 'N/A'}
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <div class="data-label mt-2"><fmt:message key="perfil.estado"/></div>
+                        <div class="data-value border-0">
+                            <span class="badge bg-success rounded-pill px-3"><i class="bi bi-check-circle me-1"></i> <fmt:message key="perfil.activo"/></span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- CUERPO DE DATOS -->
-            <div class="p-4 p-md-5">
-                
-                <!-- SECCION 1: Identificacion -->
-                <div class="mb-4">
-                    <h5 class="section-title"><i class="fas fa-id-card"></i> <fmt:message key="paciente.identificacion" /></h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.documento" /></div>
-                            <div class="data-value">${not empty paciente ? paciente.documento : '-'}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.nombres.completos" /></div>
-                            <div class="data-value">${not empty paciente ? paciente.nombres : '-'} ${not empty paciente ? paciente.apellidos : ''}</div>
-                        </div>
-                    </div>
-                </div>
+            <%-- Tarjeta 2: Datos de la Cita Actual --%>
+            <div class="col-lg-8">
+                <div class="apple-card h-100">
+                    <div class="p-4 p-md-5">
+                        <h5 class="section-title"><i class="bi bi-calendar2-check-fill"></i> <fmt:message key="perfil.cita.reciente"/></h5>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="data-label"><fmt:message key="perfil.fecha.programada"/></div>
+                                <div class="data-value text-primary fw-bold fs-5">
+                                    <c:choose>
+                                        <c:when test="${not empty citaActual.fechaCita}">
+                                            <i class="bi bi-calendar3 me-2"></i>
+                                            <fmt:formatDate value="${citaActual.fechaCita}" pattern="dd/MM/yyyy" />
+                                        </c:when>
+                                        <c:otherwise><fmt:message key="perfil.pendiente.asignacion"/></c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="data-label"><fmt:message key="perfil.hora.atencion"/></div>
+                                <div class="data-value fw-bold fs-5">
+                                    <i class="bi bi-clock me-2 text-muted"></i>
+                                    ${not empty citaActual.horaCita ? citaActual.horaCita : '--:--'}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="data-label"><fmt:message key="cita.estado.actual"/></div>
+                                <div class="data-value border-0">
+                                    <c:choose>
+                                        <c:when test="${not empty citaActual.estado}">
+                                            <c:set var="estadoActual" value="${citaActual.estado}" />
+                                            <span class="status-badge bg-${estadoActual.toLowerCase()} shadow-sm">${estadoActual}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="status-badge bg-programada shadow-sm"><fmt:message key="perfil.sin.cita"/></span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
 
-                <!-- SECCION 2: Contacto -->
-                <div class="mb-4">
-                    <h5 class="section-title"><i class="fas fa-map-marker-alt"></i> <fmt:message key="paciente.contacto" /></h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.telefono" /></div>
-                            <div class="data-value">${not empty paciente ? paciente.telefono : '-'}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.correo" /></div>
-                            <div class="data-value">
-                                <c:choose>
-                                    <c:when test="${not empty paciente.email}">${paciente.email}</c:when>
-                                    <c:otherwise><span class="text-muted fst-italic"><fmt:message key="paciente.sin.registro" /></span></c:otherwise>
-                                </c:choose>
+                            <div class="col-md-6">
+                                <div class="data-label"><fmt:message key="perfil.medico.asignado"/></div>
+                                <div class="data-value border-0">
+                                    <i class="bi bi-file-medical-fill me-2 text-primary"></i>
+                                    <span class="fw-bold"><fmt:message key="horario.dr"/> ${not empty citaActual.medicoNombre ? citaActual.medicoNombre : ''}</span>
+                                    <c:if test="${empty citaActual.medicoNombre}"><fmt:message key="perfil.por.asignar"/></c:if>
+                                    <div class="small text-muted mt-1 fw-normal" style="font-size: 0.85rem; padding-left: 28px;">
+                                        ${not empty citaActual.especialidadNombre ? citaActual.especialidadNombre : ''}
+                                        <c:if test="${empty citaActual.especialidadNombre}"><fmt:message key="perfil.medicina.general"/></c:if>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 mt-2">
+                                <div class="data-label"><fmt:message key="cita.motivo"/></div>
+                                <div class="data-value border-0 bg-light p-3 rounded-4 mt-2 shadow-sm border">
+                                    <c:choose>
+                                        <c:when test="${not empty citaActual.motivo}">
+                                            <i class="bi bi-chat-square-quote text-muted me-2"></i> ${citaActual.motivo}
+                                        </c:when>
+                                        <c:otherwise><span class="text-muted fst-italic"><fmt:message key="cita.sin.motivo"/></span></c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- SECCION 3: Datos Medicos -->
-                <div class="mb-4">
-                    <h5 class="section-title"><i class="fas fa-hospital-user"></i> <fmt:message key="paciente.datos.medicos" /></h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.eps" /></div>
-                            <div class="data-value text-uppercase">${not empty paciente ? paciente.eps : '-'}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="data-label"><fmt:message key="paciente.nacimiento" /></div>
-                            <div class="data-value">
-                                <c:if test="${not empty paciente.fechaNacimiento}">
-                                    <fmt:formatDate value="${paciente.fechaNacimiento}" pattern="dd/MM/yyyy" />
-                                </c:if>
-                                <c:if test="${empty paciente.fechaNacimiento}">-</c:if>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BOTONES DE ACCION -->
-                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-5 pt-4 gap-3" style="border-top: 1px solid rgba(0,0,0,0.08);">
-                    
-                    <!-- Boton Cancelar (Volver) -->
-                    <a href="${pageContext.request.contextPath}/consulta-cita" class="btn btn-outline-cancel btn-apple w-100 w-sm-auto text-center">
-                        <i class="fas fa-arrow-left me-2"></i> <fmt:message key="paciente.cancelar" />
-                    </a>
-                    
-                    <!-- Boton Generar PDF -->
-                    <form action="${pageContext.request.contextPath}/generar-pdf" method="get" class="m-0 w-100 w-sm-auto">
-                        <input type="hidden" name="documento" value="${paciente.documento}">
-                        <button type="submit" class="btn btn-sena btn-apple shadow-sm w-100">
-                            <i class="fas fa-file-pdf me-2"></i> <fmt:message key="consulta.descargar" />
-                        </button>
-                    </form>
-                    
-                </div>
-
             </div>
         </div>
+
+        <%-- Seccion 3: Historial --%>
+        <div class="apple-card">
+            <div class="p-4 p-md-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="section-title mb-0"><i class="bi bi-clipboard2-data-fill"></i> <fmt:message key="perfil.historial.completo"/></h5>
+                    <span class="badge bg-primary rounded-pill px-3 py-2 shadow-sm">${not empty historial ? historial.size() : 0} <fmt:message key="perfil.registros"/></span>
+                </div>
+                
+                <div class="table-responsive db-table shadow-sm border border-light">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th class="ps-4"><fmt:message key="cita.fecha"/></th>
+                                <th><fmt:message key="cita.hora"/></th>
+                                <th><fmt:message key="cita.motivo"/></th>
+                                <th><fmt:message key="cita.estado"/></th>
+                                <th><fmt:message key="perfil.observaciones"/></th>
+                                <th><fmt:message key="perfil.registrado.el"/></th>
+                                <th class="pe-4 text-center">PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="h" items="${historial}">
+                                <tr>
+                                    <td class="ps-4 fw-bold text-primary">
+                                        <i class="bi bi-calendar2-event text-muted me-1 d-none d-sm-inline"></i>
+                                        <fmt:formatDate value="${h.fechaCita}" pattern="dd/MM/yyyy" />
+                                    </td>
+                                    <td class="fw-medium">${h.horaCita}</td>
+                                    <td>${h.motivo}</td>
+                                    <td>
+                                        <c:set var="st" value="${h.estado.toLowerCase()}"/>
+                                        <span class="status-badge bg-${st}">${h.estado}</span>
+                                    </td>
+                                    <td class="text-muted small">
+                                        <c:choose>
+                                            <c:when test="${not empty h.observaciones}">${h.observaciones}</c:when>
+                                            <c:otherwise><span class="fst-italic opacity-50"><fmt:message key="perfil.sin.observaciones"/></span></c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="text-muted" style="font-size: 0.8rem;">
+                                        <fmt:formatDate value="${h.fechaRegistro}" pattern="dd/MM/yyyy HH:mm" />
+                                    </td>
+                                    <td class="pe-4 text-center">
+                                        <a href="${pageContext.request.contextPath}/pdf?id=${h.id}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill shadow-sm" title="<fmt:message key='cita.descargar'/>">
+                                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            
+                            <c:if test="${empty historial}">
+                                <tr>
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <div class="p-4">
+                                            <i class="bi bi-inbox-fill fs-1 d-block mb-3 opacity-25" style="color: var(--color-primario);"></i>
+                                            <h6 class="fw-bold"><fmt:message key="perfil.sin.registros"/></h6>
+                                            <p class="mb-0 small"><fmt:message key="perfil.sin.historial.desc"/></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </tbody>
+                    </table>
+                </div>
+
+                <%-- Botones de Accion Inferiores --%>
+                <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center mt-5 pt-4 border-top">
+                    <a href="${pageContext.request.contextPath}/consulta-cita" class="btn btn-outline-secondary btn-apple">
+                        <i class="bi bi-arrow-left me-2"></i> <fmt:message key="perfil.volver.buscar"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- FOOTER CONSISTENTE -->
     <footer class="py-4 text-center mt-auto" style="background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.6); z-index: 1;">
         <div class="container">
-            <p class="mb-0 fw-medium small" style="color: var(--texto-suave);">&copy; 2026 - <fmt:message key="app.nombre"/> - ADSO CIMM SENA</p>
+            <p class="mb-0 fw-bold small" style="color: var(--texto-suave);">&copy; 2026 - <fmt:message key="perfil.footer"/></p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 import co.sena.adso.dao.PacienteDAO;
+import co.sena.adso.dto.Cita;
 import co.sena.adso.dto.Paciente;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,15 +29,48 @@ public class PacienteServlet extends HttpServlet {
                 request.setAttribute("pacientes", lista);
                 request.getRequestDispatcher("/views/pacientes/lista.jsp").forward(request, response);
                 break;
+                
             case "nuevo":
                 request.getRequestDispatcher("/views/pacientes/formulario.jsp").forward(request, response);
                 break;
+                
             case "editar":
-                int idEditar = Integer.parseInt(request.getParameter("id"));
-                Paciente paciente = dao.buscarPorId(idEditar); 
-                request.setAttribute("paciente", paciente);
-                request.getRequestDispatcher("/views/pacientes/formulario.jsp").forward(request, response);
+                String idParamEditar = request.getParameter("id");
+                if (idParamEditar != null) {
+                    int idEditar = Integer.parseInt(idParamEditar);
+                    Paciente paciente = dao.buscarPorId(idEditar); 
+                    request.setAttribute("paciente", paciente);
+                    request.getRequestDispatcher("/views/pacientes/formulario.jsp").forward(request, response);
+                }
                 break;
+
+            case "ver":
+                Paciente pVer = null;
+                String doc = request.getParameter("documento");
+                
+                if (doc != null && !doc.isEmpty()) {
+                    pVer = dao.buscarPorDocumento(doc);
+                } else {
+                    String idParamVer = request.getParameter("id");
+                    if (idParamVer != null) {
+                        pVer = dao.buscarPorId(Integer.parseInt(idParamVer));
+                    }
+                }
+
+                if (pVer != null) {
+                    // Aqui esta la clave: extraemos la lista de citas del objeto paciente
+                    List<Cita> historialCitas = pVer.getCitas();
+                    
+                    // Pasamos tanto el paciente como su historial al JSP
+                    request.setAttribute("paciente", pVer);
+                    request.setAttribute("historial", historialCitas);
+                    
+                    request.getRequestDispatcher("/views/pacientes/perfil_paciente.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=no_encontrado");
+                }
+                break;
+
             default:
                 response.sendRedirect(request.getContextPath() + "/pacientes");
         }
@@ -49,51 +83,52 @@ public class PacienteServlet extends HttpServlet {
 
         if ("insertar".equals(accion)) {
             Paciente p = new Paciente();
-            p.setNombres(request.getParameter("nombres"));
-            p.setApellidos(request.getParameter("apellidos"));
-            p.setDocumento(request.getParameter("documento"));
-            p.setFechaNacimiento(Date.valueOf(request.getParameter("fechaNacimiento")));
-            p.setTelefono(request.getParameter("telefono"));
-            p.setEps(request.getParameter("eps"));
-            
-            String email = request.getParameter("email");
-            p.setEmail(email != null ? email : "");
-            
-            String veredaBarrio = request.getParameter("veredaBarrio");
-            p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
-            
+            extraerDatos(request, p);
             dao.insertar(p); 
             response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
             
         } else if ("actualizar".equals(accion)) {
-            Paciente p = new Paciente();
-            p.setId(Integer.parseInt(request.getParameter("id"))); 
-            p.setNombres(request.getParameter("nombres"));
-            p.setApellidos(request.getParameter("apellidos"));
-            p.setDocumento(request.getParameter("documento"));
-            p.setFechaNacimiento(Date.valueOf(request.getParameter("fechaNacimiento")));
-            p.setTelefono(request.getParameter("telefono"));
-            p.setEps(request.getParameter("eps"));
-            
-            String email = request.getParameter("email");
-            p.setEmail(email != null ? email : "");
-            
-            String veredaBarrio = request.getParameter("veredaBarrio");
-            p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
-            
-            dao.actualizar(p); 
-            response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+            String idParamActualizar = request.getParameter("id");
+            if (idParamActualizar != null) {
+                Paciente p = new Paciente();
+                p.setId(Integer.parseInt(idParamActualizar)); 
+                extraerDatos(request, p);
+                dao.actualizar(p); 
+                response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+            }
             
         } else if ("eliminar".equals(accion)) {
-            // CORRECCIÓN AQUÍ: Validamos si dio error de Base de Datos para no redirigir con un "ok" falso
-            int idEliminar = Integer.parseInt(request.getParameter("id"));
-            boolean exito = dao.eliminar(idEliminar);
-            
-            if (exito) {
-                response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=error_citas");
+            String idParamEliminar = request.getParameter("id");
+            if (idParamEliminar != null) {
+                int idEliminar = Integer.parseInt(idParamEliminar);
+                boolean exito = dao.eliminar(idEliminar);
+                
+                if (exito) {
+                    response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=ok");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/pacientes?mensaje=error_citas");
+                }
             }
         }
+    }
+
+    private void extraerDatos(HttpServletRequest request, Paciente p) {
+        p.setNombres(request.getParameter("nombres"));
+        p.setApellidos(request.getParameter("apellidos"));
+        p.setDocumento(request.getParameter("documento"));
+        
+        String fechaStr = request.getParameter("fechaNacimiento");
+        if (fechaStr != null && !fechaStr.isEmpty()) {
+            p.setFechaNacimiento(Date.valueOf(fechaStr));
+        }
+        
+        p.setTelefono(request.getParameter("telefono"));
+        p.setEps(request.getParameter("eps"));
+        
+        String email = request.getParameter("email");
+        p.setEmail(email != null ? email : "");
+        
+        String veredaBarrio = request.getParameter("veredaBarrio");
+        p.setVeredaBarrio(veredaBarrio != null ? veredaBarrio : "");
     }
 }

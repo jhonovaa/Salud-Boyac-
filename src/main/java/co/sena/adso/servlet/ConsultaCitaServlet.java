@@ -18,7 +18,7 @@ public class ConsultaCitaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         
-        // Generar CAPTCHA nuevo para la vista publica [cite: 503, 735]
+        // Generar CAPTCHA nuevo para la vista publica
         String textoCaptcha = CaptchaGenerator.generarTextoCaptcha();
         session.setAttribute("captchaText", textoCaptcha);
         
@@ -35,28 +35,32 @@ public class ConsultaCitaServlet extends HttpServlet {
         String captchaGuardado = (String) session.getAttribute("captchaText");
         String documento = request.getParameter("documento");
 
-        // 1. Validar CAPTCHA [cite: 853, 940]
+        // 1. Validar CAPTCHA
         if (captchaGuardado != null && captchaGuardado.equalsIgnoreCase(captchaIngresado)) {
             
-            // 2. Buscar al paciente usando tu DAO [cite: 703, 704]
+            // 2. Buscar al paciente usando tu DAO
             PacienteDAO dao = new PacienteDAO();
             Paciente paciente = dao.buscarPorDocumento(documento);
             
             if (paciente != null) {
-                // EXITO: Enviar al perfil con los datos del objeto [cite: 674]
+                // EXITO: Enviar al perfil con los datos del objeto
                 request.setAttribute("paciente", paciente);
+                
+                // ---> AQUI ESTA LA LINEA CORREGIDA QUE ENVIA LAS CITAS A LA VISTA <---
+                request.setAttribute("historial", paciente.getCitas());
+                
                 request.getRequestDispatcher("/views/perfil_paciente.jsp").forward(request, response);
                 return; // Finaliza para evitar regenerar captcha y volver a la consulta
             } else {
-                // ERROR: Paciente no encontrado [cite: 856]
+                // ERROR: Paciente no encontrado
                 request.setAttribute("error", "consulta.no.encontrado");
             }
         } else {
-            // ERROR: CAPTCHA Incorrecto [cite: 853]
+            // ERROR: CAPTCHA Incorrecto
             request.setAttribute("error", "consulta.captcha.error");
         }
         
-        // 3. Si hubo error, regenerar CAPTCHA y volver a la consulta [cite: 754]
+        // 3. Si hubo error, regenerar CAPTCHA y volver a la consulta
         String textoCaptcha = CaptchaGenerator.generarTextoCaptcha();
         session.setAttribute("captchaText", textoCaptcha);
         request.setAttribute("captchaImage", CaptchaGenerator.generarImagenBase64(textoCaptcha));
