@@ -210,17 +210,32 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ms-auto fw-medium align-items-center">
-        <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/"><fmt:message key='index.nav.inicio'/></a></li>
         <li class="nav-item d-flex gap-2 px-4 py-2">
-            <a href="?lang=es" class="text-decoration-none fw-bold" style="color: var(--texto-normal);">ES</a>
-            <span style="color: var(--texto-suave);">|</span>
-            <a href="?lang=en" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">EN</a>
-            <span style="color: var(--texto-suave);">|</span>
-            <a href="?lang=it" class="text-decoration-none fw-bold" style="color: var(--texto-suave);">IT</a>
-        </li>
-        <li class="nav-item d-md-none mt-3 w-100">
-            <a class="btn btn-saludboyaca btn-apple w-100" href="${pageContext.request.contextPath}/login"><fmt:message key='index.nav.intranet'/></a>
-        </li>
+    <%-- Definimos la variable de idioma actual, por defecto 'es' --%>
+    <c:set var="currentLang" value="${sessionScope.lang == null ? 'es' : sessionScope.lang}" />
+
+    <%-- Idioma ES --%>
+    <a href="?lang=es" class="text-decoration-none fw-bold" 
+       style="color: ${currentLang == 'es' ? 'var(--texto-normal)' : 'var(--texto-suave)'};">
+       ES
+    </a>
+    
+    <span style="color: var(--texto-suave);">|</span>
+    
+    <%-- Idioma EN --%>
+    <a href="?lang=en" class="text-decoration-none fw-bold" 
+       style="color: ${currentLang == 'en' ? 'var(--texto-normal)' : 'var(--texto-suave)'};">
+       EN
+    </a>
+    
+    <span style="color: var(--texto-suave);">|</span>
+    
+    <%-- Idioma IT --%>
+    <a href="?lang=it" class="text-decoration-none fw-bold" 
+       style="color: ${currentLang == 'it' ? 'var(--texto-normal)' : 'var(--texto-suave)'};">
+       IT
+    </a>
+</li>
     </ul>
 </div>
         </div>
